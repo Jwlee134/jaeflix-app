@@ -1,3 +1,0 @@
-type LoginNaviParamList = {
-  Login: undefined;
-};
