@@ -6,7 +6,11 @@ import Navigator from './Screens/Navigator';
 const App = () => {
   return (
     <UserContextProvider>
-      <StatusBar barStyle="light-content" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={'transparent'}
+        translucent={true}
+      />
       <Navigator />
     </UserContextProvider>
   );
