@@ -1,0 +1,3 @@
+type LoginNaviParamList = {
+  Login: undefined;
+};
