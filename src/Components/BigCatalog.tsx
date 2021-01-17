@@ -51,7 +51,7 @@ const LabelGenres = styled.Text`
 
 interface Props {
   id: number;
-  image: string;
+  image: string | null;
   year: string;
   title: string;
   rating: number;
