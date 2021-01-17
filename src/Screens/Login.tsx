@@ -1,10 +1,16 @@
-import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useContext, useEffect} from 'react';
-import {Linking} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import SplashScreen from 'react-native-splash-screen';
-import styled from 'styled-components/native';
-import Input from '~/Components/Input';
+import {Linking} from 'react-native';
+
 import {UserContext} from '~/Context/User';
+
+import styled from 'styled-components/native';
+
+import {IUserContext, LoginNaviParamList} from '~/@types';
+
+import Button from '~/Components/Button';
+import Input from '~/Components/Input';
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -46,11 +52,11 @@ const Login = ({navigation}: Props) => {
           placeholder="비밀번호"
           secureTextEntry={true}
         />
-        {/* <Button
+        <Button
           style={{marginBottom: 24}}
           label="로그인"
           onPress={() => login('sorhd134@gmail.com', 'password')}
-        /> */}
+        />
         <PasswordReset
           onPress={() => Linking.openURL('https://github.com/Jwlee134')}>
           비밀번호 재설정

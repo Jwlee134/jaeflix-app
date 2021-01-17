@@ -1,6 +1,8 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
+
 import {UserContextProvider} from './Context/User';
+
 import Navigator from './Screens/Navigator';
 
 const App = () => {

@@ -7,7 +7,7 @@ interface IUserInfo {
 }
 
 interface IUserContext {
-  isLoading: boolean;
+  isLoaded: boolean;
   userInfo: IUserInfo | undefined;
   login: (email: string, password: string) => void;
   getUserInfo: () => void;
@@ -53,10 +53,14 @@ interface Movie {
   };
 }
 
+interface MovieList {
+  results: Movie[];
+}
+
 // API
 interface MovieApi {
-  nowPlaying: () => Promise<AxiosResponse<Movie[]>>;
-  upcoming: () => Promise<AxiosResponse<Movie[]>>;
-  popular: () => Promise<AxiosResponse<Movie[]>>;
-  topRated: () => Promise<AxiosResponse<Movie[]>>;
+  nowPlaying: () => Promise<AxiosResponse<MovieList>>;
+  upcoming: () => Promise<AxiosResponse<MovieList>>;
+  popular: () => Promise<AxiosResponse<MovieList>>;
+  topRated: () => Promise<AxiosResponse<MovieList>>;
 }

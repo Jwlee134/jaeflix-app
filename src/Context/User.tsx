@@ -1,8 +1,10 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {createContext, useEffect, useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {IUserContext, IUserInfo} from '~/@types';
 
 const defaultContext: IUserContext = {
-  isLoading: false,
+  isLoaded: false,
   userInfo: undefined,
   login: () => {},
   getUserInfo: () => {},
@@ -17,7 +19,7 @@ interface Props {
 
 export const UserContextProvider = ({children}: Props) => {
   const [userInfo, setUserInfo] = useState<IUserInfo | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const login = async (email: string, password: string): Promise<void> => {
     await AsyncStorage.setItem('token', 'save your token');
@@ -25,7 +27,7 @@ export const UserContextProvider = ({children}: Props) => {
       name: 'Jaewon',
       email: 'sorhd134@gmail.com',
     });
-    setIsLoading(true);
+    setIsLoaded(true);
   };
 
   const getUserInfo = async (): Promise<void> => {
@@ -36,12 +38,14 @@ export const UserContextProvider = ({children}: Props) => {
           name: 'Jaewon',
           email: 'sorhd134@gmail.com',
         });
-        setIsLoading(true);
+        setIsLoaded(true);
+      } else {
+        setIsLoaded(true);
       }
     } catch (error) {
       console.log(error);
       setUserInfo(undefined);
-      setIsLoading(true);
+      setIsLoaded(true);
     }
   };
 
@@ -56,7 +60,7 @@ export const UserContextProvider = ({children}: Props) => {
 
   return (
     <UserContext.Provider
-      value={{userInfo, isLoading, login, logout, getUserInfo}}>
+      value={{userInfo, isLoaded, login, logout, getUserInfo}}>
       {children}
     </UserContext.Provider>
   );

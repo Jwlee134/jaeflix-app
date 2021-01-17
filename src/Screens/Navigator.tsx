@@ -1,9 +1,14 @@
 import React, {useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
+
 import {UserContext} from '~/Context/User';
 import Loading from './Loading';
 import Login from './Login';
+import MovieHome from './Movie/MovieHome';
+import MovieDetail from './Movie/MovieDetail';
+
+import {IUserContext} from '~/@types';
 
 const Stack = createStackNavigator();
 
@@ -65,12 +70,9 @@ const MovieNavigator = () => {
 };
 
 const Navigator = () => {
-  const {isLoading, userInfo} = useContext<IUserContext>(UserContext);
+  const {isLoaded, userInfo} = useContext<IUserContext>(UserContext);
 
-  console.log(isLoading);
-  console.log(userInfo);
-
-  if (isLoading) {
+  if (!isLoaded) {
     return <Loading />;
   }
   return (
