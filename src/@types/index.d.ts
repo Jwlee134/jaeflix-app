@@ -21,7 +21,7 @@ type LoginNaviParamList = {
 
 type MovieNaviParamList = {
   MovieHome: undefined;
-  MovieDetail: {
+  Detail: {
     id: number;
   };
 };
@@ -70,13 +70,12 @@ interface Languages {
   name: string;
 }
 
-interface Movie {
+interface CommonItems {
+  id: number;
   poster_path: string | null;
   adult: boolean;
   overview: string;
   release_date: string;
-  genre_ids: number[];
-  id: number;
   original_title: string;
   original_language: string;
   title: string;
@@ -85,6 +84,10 @@ interface Movie {
   vote_count: number;
   video: boolean;
   vote_average: number;
+}
+
+interface Movie extends CommonItems {
+  genre_ids: number[];
 }
 
 interface MovieList {
@@ -95,31 +98,48 @@ interface MovieList {
   total_results: number;
 }
 
-interface MovieDetail {
-  adult: boolean;
-  backdrop_path: string | null;
+interface MovieDetail extends CommonItems {
   belongs_to_collection: Object | null;
   budget: number;
   genres: Genre[];
   homepage: string | null;
-  id: number;
   imdb_id: string | null;
-  original_language: string;
-  original_title: string;
-  popularity: number;
-  poster_path: string | null;
   production_companies: Companies[];
   production_countries: Countries[];
-  release_date: string;
   revenue: number;
   runtime: number | null;
   spoken_languages: Languages[];
   status: string;
   tagline: string | null;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
+}
+
+interface CommonCredit {
+  adult: boolean;
+  gender: number | null;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+  credit_id: string;
+}
+
+interface Cast extends CommonCredit {
+  cast_id: number;
+  character: string;
+  order: number;
+}
+
+interface Crew extends CommonCredit {
+  department: string;
+  job: string;
+}
+
+interface Credits {
+  id: number;
+  cast: Cast[];
+  crew: Crew[];
 }
 
 // API
@@ -128,4 +148,7 @@ interface MovieApi {
   upcoming: () => Promise<AxiosResponse<MovieList>>;
   popular: () => Promise<AxiosResponse<MovieList>>;
   topRated: () => Promise<AxiosResponse<MovieList>>;
+  detail: (id: number) => Promise<AxiosResponse<MovieDetail>>;
+  similar: (id: number) => Promise<AxiosResponse<MovieList>>;
+  credits: (id: number) => Promise<AxiosResponse<Credits>>;
 }
