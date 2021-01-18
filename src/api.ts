@@ -10,9 +10,39 @@ const api = axios.create({
   },
 });
 
+const page = Math.round(Math.random() * 3 + 1);
+
 export const movieApi: MovieApi = {
-  nowPlaying: () => api.get('/movie/now_playing'),
-  upcoming: () => api.get('/movie/upcoming'),
-  popular: () => api.get('/movie/popular'),
-  topRated: () => api.get('/movie/top_rated'),
+  nowPlaying: () =>
+    api.get('/movie/now_playing', {
+      params: {
+        page,
+      },
+    }),
+  upcoming: () =>
+    api.get('/movie/upcoming', {
+      params: {
+        page,
+      },
+    }),
+  popular: () =>
+    api.get('/movie/popular', {
+      params: {
+        page,
+      },
+    }),
+  topRated: () =>
+    api.get('/movie/top_rated', {
+      params: {
+        page,
+      },
+    }),
+  detail: (id: number) =>
+    api.get(`/movie/${id}`, {
+      params: {
+        append_to_response: 'videos',
+      },
+    }),
+  similar: (id: number) => api.get(`/movie/${id}/similar`),
+  credits: (id: number) => api.get(`/movie/${id}/credits`),
 };
