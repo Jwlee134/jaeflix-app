@@ -1,20 +1,20 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
-
-import {UserContextProvider} from './Context/User';
+import {Provider} from 'react-redux';
 
 import Navigator from './Screens/Navigator';
+import store from './store';
 
 const App = () => {
   return (
-    <UserContextProvider>
+    <Provider store={store}>
       <StatusBar
         barStyle="light-content"
         backgroundColor={'transparent'}
         translucent={true}
       />
       <Navigator />
-    </UserContextProvider>
+    </Provider>
   );
 };
 
