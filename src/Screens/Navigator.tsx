@@ -40,7 +40,7 @@ const MovieNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="Detail"
+        name="MovieDetail"
         component={Detail}
         options={{
           title: 'Jaeflix',
@@ -78,7 +78,7 @@ const TVNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="Detail"
+        name="TVDetail"
         component={Detail}
         options={{
           title: 'Jaeflix',

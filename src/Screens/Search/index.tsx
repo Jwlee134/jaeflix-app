@@ -61,7 +61,7 @@ const Search = ({navigation}: Props) => {
               data={movie}
               isSearch={true}
               onPress={(id: number) => {
-                navigation.navigate('Detail', {
+                navigation.navigate('MovieDetail', {
                   id,
                   isMovie: true,
                 });
@@ -74,7 +74,7 @@ const Search = ({navigation}: Props) => {
               data={tv}
               isSearch={true}
               onPress={(id: number) => {
-                navigation.navigate('Detail', {
+                navigation.navigate('TVDetail', {
                   id,
                   isMovie: false,
                 });

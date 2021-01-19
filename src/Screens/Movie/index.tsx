@@ -58,7 +58,7 @@ const MovieHome = ({navigation}: Props) => {
       }>
       <BigCatalogList
         onPress={(id: number) => {
-          navigation.navigate('Detail', {
+          navigation.navigate('MovieDetail', {
             id,
             isMovie: true,
           });
@@ -68,7 +68,7 @@ const MovieHome = ({navigation}: Props) => {
         title="인기"
         data={popular}
         onPress={(id: number) => {
-          navigation.navigate('Detail', {
+          navigation.navigate('MovieDetail', {
             id,
             isMovie: true,
           });
@@ -78,7 +78,7 @@ const MovieHome = ({navigation}: Props) => {
         title="최고 평점"
         data={topRated}
         onPress={(id: number) => {
-          navigation.navigate('Detail', {
+          navigation.navigate('MovieDetail', {
             id,
             isMovie: true,
           });
@@ -88,7 +88,7 @@ const MovieHome = ({navigation}: Props) => {
         title="상영 예정"
         data={upcoming}
         onPress={(id: number) => {
-          navigation.navigate('Detail', {
+          navigation.navigate('MovieDetail', {
             id,
             isMovie: true,
           });

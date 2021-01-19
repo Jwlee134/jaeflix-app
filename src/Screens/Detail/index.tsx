@@ -1,5 +1,5 @@
 import React, {useEffect, useLayoutEffect} from 'react';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {useSelector} from 'react-redux';
@@ -52,6 +52,7 @@ const Detail = ({navigation, route}: Props) => {
   }, [navigation, title]);
 
   useEffect(() => {
+    console.log(route.name);
     const {id, isMovie} = route.params;
     const promise = isMovie
       ? dispatch(fetchMovieDetail(id))
