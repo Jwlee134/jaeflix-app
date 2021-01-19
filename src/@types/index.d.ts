@@ -1,28 +1,28 @@
 import {AxiosResponse} from 'axios';
 
-// Context
-interface IUserInfo {
-  name: string;
-  email: string;
-}
-
-interface IUserContext {
-  isLoaded: boolean;
-  userInfo: IUserInfo | undefined;
-  login: (email: string, password: string) => void;
-  getUserInfo: () => void;
-  logout: () => void;
-}
-
 // Navigation
-type LoginNaviParamList = {
-  Login: undefined;
-};
 
 type MovieNaviParamList = {
   MovieHome: undefined;
   Detail: {
     id: number;
+    isMovie: boolean;
+  };
+};
+
+type TVNaviParamList = {
+  TVHome: undefined;
+  Detail: {
+    id: number;
+    isMovie: boolean;
+  };
+};
+
+type SearchNaviParamList = {
+  Search: undefined;
+  Detail: {
+    id: number;
+    isMovie: boolean;
   };
 };
 
@@ -70,35 +70,102 @@ interface Languages {
   name: string;
 }
 
+interface CreatedBy {
+  id: number;
+  credit_id: string;
+  name: string;
+  gender: number;
+  profile_path: string | null;
+}
+
+interface LastEpisodeToAir {
+  air_date: string;
+  episode_number: number;
+  id: number;
+  name: string;
+  overview: string;
+  production_code: string;
+  season_number: number;
+  still_path: string | null;
+  vote_average: number;
+  vote_count: number;
+}
+
+interface Networks {
+  name: string;
+  id: number;
+  logo_path: string | null;
+  origin_country: string;
+}
+
+interface Seasons {
+  air_date: string;
+  episode_count: number;
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  season_number: number;
+}
+
 interface CommonItems {
   id: number;
   poster_path: string | null;
-  adult: boolean;
   overview: string;
-  release_date: string;
-  original_title: string;
   original_language: string;
-  title: string;
   backdrop_path: string | null;
   popularity: number;
   vote_count: number;
-  video: boolean;
   vote_average: number;
 }
 
 interface Movie extends CommonItems {
+  title: string;
+  original_title: string;
+  release_date: string;
+  video: boolean;
+  adult: boolean;
   genre_ids: number[];
 }
 
-interface MovieList {
+interface TV extends CommonItems {
+  first_air_date: string;
+  origin_country: string[];
+  name: string;
+  original_name: string;
+  genre_ids: number[];
+}
+
+interface TVDetail extends TV {
+  created_by: CreatedBy[];
+  episode_run_time: number[];
+  genres: Genre[];
+  homepage: string;
+  in_production: boolean;
+  languages: string[];
+  last_air_date: string;
+  next_episode_to_air: null;
+  last_episode_to_air: LastEpisodeToAir;
+  networks: Networks[];
+  number_of_episodes: number;
+  number_of_seasons: number;
+  production_companies: Companies[];
+  production_countries: Countries[];
+  seasons: Seasons[];
+  spoken_languages: Languages[];
+  status: string;
+  tagline: string;
+  type: string;
+}
+
+interface CommonList<T> {
   page: number;
-  results: Movie[];
-  dates: object;
+  results: T[];
   total_pages: number;
   total_results: number;
 }
 
-interface MovieDetail extends CommonItems {
+interface MovieDetail extends Movie {
   belongs_to_collection: Object | null;
   budget: number;
   genres: Genre[];
@@ -144,11 +211,23 @@ interface Credits {
 
 // API
 interface MovieApi {
-  nowPlaying: () => Promise<AxiosResponse<MovieList>>;
-  upcoming: () => Promise<AxiosResponse<MovieList>>;
-  popular: () => Promise<AxiosResponse<MovieList>>;
-  topRated: () => Promise<AxiosResponse<MovieList>>;
+  nowPlaying: () => Promise<AxiosResponse<CommonList<Movie>>>;
+  upcoming: () => Promise<AxiosResponse<CommonList<Movie>>>;
+  popular: () => Promise<AxiosResponse<CommonList<Movie>>>;
+  topRated: () => Promise<AxiosResponse<CommonList<Movie>>>;
   detail: (id: number) => Promise<AxiosResponse<MovieDetail>>;
-  similar: (id: number) => Promise<AxiosResponse<MovieList>>;
+  similar: (id: number) => Promise<AxiosResponse<CommonList<Movie>>>;
   credits: (id: number) => Promise<AxiosResponse<Credits>>;
+  search: (term: string) => Promise<AxiosResponse<CommonList<Movie>>>;
+}
+
+interface TVApi {
+  airingToday: () => Promise<AxiosResponse<CommonList<TV>>>;
+  popular: () => Promise<AxiosResponse<CommonList<TV>>>;
+  topRated: () => Promise<AxiosResponse<CommonList<TV>>>;
+  upcoming: () => Promise<AxiosResponse<CommonList<TV>>>;
+  detail: (id: number) => Promise<AxiosResponse<TVDetail>>;
+  similar: (id: number) => Promise<AxiosResponse<CommonList<TV>>>;
+  credits: (id: number) => Promise<AxiosResponse<Credits>>;
+  search: (term: string) => Promise<AxiosResponse<CommonList<TV>>>;
 }

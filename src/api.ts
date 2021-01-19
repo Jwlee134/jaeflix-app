@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {API_KEY} from '@env';
-import {MovieApi} from './@types';
+import {MovieApi, TVApi} from './@types';
 
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3',
@@ -10,7 +10,7 @@ const api = axios.create({
   },
 });
 
-const page = Math.round(Math.random() * 3 + 1);
+const page = Math.round(Math.random() * 2 + 1);
 
 export const movieApi: MovieApi = {
   nowPlaying: () =>
@@ -45,4 +45,51 @@ export const movieApi: MovieApi = {
     }),
   similar: (id: number) => api.get(`/movie/${id}/similar`),
   credits: (id: number) => api.get(`/movie/${id}/credits`),
+  search: (term: string) =>
+    api.get('/search/movie', {
+      params: {
+        query: term,
+      },
+    }),
+};
+
+export const tvApi: TVApi = {
+  airingToday: () =>
+    api.get('/tv/airing_today', {
+      params: {
+        page,
+      },
+    }),
+  popular: () =>
+    api.get('/tv/popular', {
+      params: {
+        page,
+      },
+    }),
+  topRated: () =>
+    api.get('/tv/top_rated', {
+      params: {
+        page,
+      },
+    }),
+  upcoming: () =>
+    api.get('/tv/on_the_air', {
+      params: {
+        page,
+      },
+    }),
+  detail: (id: number) =>
+    api.get(`/tv/${id}`, {
+      params: {
+        append_to_response: 'videos',
+      },
+    }),
+  similar: (id: number) => api.get(`/tv/${id}/similar`),
+  credits: (id: number) => api.get(`/tv/${id}/credits`),
+  search: (term: string) =>
+    api.get('/search/tv', {
+      params: {
+        query: term,
+      },
+    }),
 };

@@ -1,15 +1,15 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {Cast, Crew, MovieDetail} from '~/@types';
-import {movieApi} from '~/api';
+import {Cast, Crew, MovieDetail, TVDetail} from '~/@types';
+import {movieApi, tvApi} from '~/api';
 
 interface Payload {
-  detail: MovieDetail | null;
+  detail: (MovieDetail | TVDetail) | null;
   cast: Cast[];
   crew: Crew[];
 }
 
 interface IState {
-  detail: MovieDetail | null;
+  detail: (MovieDetail | TVDetail) | null;
   cast: Cast[];
   crew: Crew[];
   loading: boolean;
@@ -35,9 +35,23 @@ export const fetchMovieDetail = createAsyncThunk(
       return {detail, cast, crew};
     } catch (error) {
       console.log(error);
-      return rejectWithValue(
-        '영화 상세 정보를 불러오는데 오류가 발생했습니다.',
-      );
+      return rejectWithValue('상세 정보를 불러오는 데 오류가 발생했습니다.');
+    }
+  },
+);
+
+export const fetchTVDetail = createAsyncThunk(
+  'detail/fetchTVDetail',
+  async (id: number, {rejectWithValue}) => {
+    try {
+      const {data: detail} = await tvApi.detail(id);
+      const {
+        data: {cast, crew},
+      } = await tvApi.credits(id);
+      return {detail, cast, crew};
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue('상세 정보를 불러오는 데 오류가 발생했습니다.');
     }
   },
 );
@@ -62,6 +76,23 @@ const detailSlice = createSlice({
         state.loading = false;
       })
       .addCase(fetchMovieDetail.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchTVDetail.pending, (state) => {
+        state.detail = null;
+        state.cast = [];
+        state.crew = [];
+        state.loading = true;
+      })
+      .addCase(fetchTVDetail.fulfilled, (state, action) => {
+        const {detail, cast, crew} = action.payload as Payload;
+        state.detail = detail;
+        state.cast = cast;
+        state.crew = crew;
+        state.loading = false;
+      })
+      .addCase(fetchTVDetail.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

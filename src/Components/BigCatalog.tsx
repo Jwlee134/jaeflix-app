@@ -43,7 +43,7 @@ const LabelTitle = styled.Text`
   padding: 8px 16px 4px 16px;
 `;
 
-const LabelGenres = styled.Text`
+const LabelSubtitle = styled.Text`
   font-size: 12px;
   color: #ffffff;
   padding: 4px 16px 8px 16px;
@@ -51,28 +51,39 @@ const LabelGenres = styled.Text`
 
 interface Props {
   id: number;
+  catalogTitle?: string;
   image: string | null;
-  year: string;
   title: string;
-  rating: number;
-  onPress: (id: number) => void;
+  subtitle: string | string[];
+  onPress?: (id: number) => void;
 }
 
-const BigCatalog = ({id, image, year, title, rating, onPress}: Props) => {
+const BigCatalog = ({
+  id,
+  catalogTitle,
+  image,
+  title,
+  subtitle,
+  onPress,
+}: Props) => {
   return (
-    <Container activeOpacity={1} onPress={() => onPress(id)}>
+    <Container
+      activeOpacity={1}
+      onPress={onPress ? () => onPress(id) : undefined}>
       <CatalogImg
-        source={{uri: `https://image.tmdb.org/t/p/w500${image}`}}
+        source={
+          image
+            ? {uri: `https://image.tmdb.org/t/p/w780${image}`}
+            : require('~/Assets/Images/noImg.png')
+        }
         style={{width: Dimensions.get('window').width, height: 300}}
       />
       <InfoContainer>
-        <LabelYear>현재 상영중</LabelYear>
+        {catalogTitle && <LabelYear>{catalogTitle}</LabelYear>}
         <SubInfoContainer>
           <Background />
           <LabelTitle>{title}</LabelTitle>
-          <LabelGenres>
-            {year.substring(0, 4)}년 개봉 · 평점 {rating}점
-          </LabelGenres>
+          <LabelSubtitle>{subtitle}</LabelSubtitle>
         </SubInfoContainer>
       </InfoContainer>
     </Container>

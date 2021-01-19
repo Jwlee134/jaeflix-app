@@ -2,16 +2,17 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 const Container = styled.View`
-  width: 100%;
   height: 40px;
-  padding: 0px 16px;
-  border-radius: 4px;
+  padding: 0px 12px;
+  margin: 0px 10px;
+  border-radius: 5px;
   background-color: #333333;
 `;
 
 const InputField = styled.TextInput`
   flex: 1;
   color: #ffffff;
+  opacity: 0.7;
 `;
 
 interface Props {
@@ -21,6 +22,7 @@ interface Props {
   style?: Object;
   clearMode?: boolean;
   onChangeText?: (text: string) => void;
+  onSubmitEditing?: () => void;
 }
 
 const Input = ({
@@ -30,6 +32,7 @@ const Input = ({
   style,
   clearMode,
   onChangeText,
+  onSubmitEditing,
 }: Props) => {
   return (
     <Container style={style}>
@@ -44,6 +47,7 @@ const Input = ({
         placeholder={placeholder}
         clearButtonMode={clearMode ? 'while-editing' : 'never'}
         onChangeText={onChangeText}
+        onSubmitEditing={onSubmitEditing}
       />
     </Container>
   );

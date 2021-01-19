@@ -2,11 +2,16 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit';
 
 import movie from './movie';
 import detail from './detail';
+import tv from './tv';
+import search from './search';
+
 import {useDispatch} from 'react-redux';
 
 const rootReducer = combineReducers({
   movie,
   detail,
+  tv,
+  search,
 });
 
 const store = configureStore({reducer: rootReducer});

@@ -1,76 +1,82 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {Movie} from '~/@types';
-import {movieApi} from '~/api';
+import {TV} from '~/@types';
+import {tvApi} from '~/api';
 
 interface Payload {
-  nowPlaying: Movie[];
-  upcoming: Movie[];
-  popular: Movie[];
-  topRated: Movie[];
+  airingToday: TV[];
+  upcoming: TV[];
+  popular: TV[];
+  topRated: TV[];
 }
 
-interface IState extends Payload {
+interface IState {
+  airingToday: TV[];
+  popular: TV[];
+  topRated: TV[];
+  upcoming: TV[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: IState = {
-  nowPlaying: [],
-  upcoming: [],
+  airingToday: [],
   popular: [],
   topRated: [],
+  upcoming: [],
   loading: true,
   error: null,
 };
 
-export const fetchMovieData = createAsyncThunk(
-  'movie/fetchMovie',
+export const fetchTVData = createAsyncThunk(
+  'tv/fetchTV',
   async (_, {rejectWithValue}) => {
     try {
       const {
-        data: {results: nowPlaying},
-      } = await movieApi.nowPlaying();
+        data: {results: airingToday},
+      } = await tvApi.airingToday();
       const {
         data: {results: upcoming},
-      } = await movieApi.upcoming();
+      } = await tvApi.upcoming();
       const {
         data: {results: popular},
-      } = await movieApi.popular();
+      } = await tvApi.popular();
       const {
         data: {results: topRated},
-      } = await movieApi.topRated();
-      return {nowPlaying, upcoming, popular, topRated};
+      } = await tvApi.topRated();
+      return {airingToday, upcoming, popular, topRated};
     } catch (error) {
       console.log(error);
-      return rejectWithValue('영화 정보를 불러오는 데 오류가 발생했습니다.');
+      return rejectWithValue(
+        'TV 프로그램 정보를 불러오는 데 오류가 발생했습니다.',
+      );
     }
   },
 );
 
-const movieSlice = createSlice({
-  name: 'movie',
+const tvSlice = createSlice({
+  name: 'tv',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchMovieData.fulfilled, (state, action) => {
+      .addCase(fetchTVData.fulfilled, (state, action) => {
         const {
-          nowPlaying,
+          airingToday,
           upcoming,
           popular,
           topRated,
         } = action.payload as Payload;
-        state.nowPlaying = nowPlaying;
+        state.airingToday = airingToday;
         state.upcoming = upcoming;
         state.popular = popular;
         state.topRated = topRated;
         state.loading = false;
       })
-      .addCase(fetchMovieData.rejected, (state, action) => {
+      .addCase(fetchTVData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
   },
 });
 
-export default movieSlice.reducer;
+export default tvSlice.reducer;
