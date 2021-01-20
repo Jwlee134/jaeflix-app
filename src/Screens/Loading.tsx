@@ -16,7 +16,7 @@ const SLottieView = styled(LottieView)`
 `;
 
 const Loading = () => {
-  const loadingAnimation = require('~/Assets/51-preloader.json');
+  const loadingAnimation = require('~/Assets/27-loading.json');
 
   return (
     <Container>
