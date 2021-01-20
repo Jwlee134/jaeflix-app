@@ -1,13 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {TV} from '~/@types';
 import {tvApi} from '~/api';
-
-interface Payload {
-  airingToday: TV[];
-  upcoming: TV[];
-  popular: TV[];
-  topRated: TV[];
-}
+import {shuffleArray} from '~/utils/shuffleArray';
 
 interface IState {
   airingToday: TV[];
@@ -60,16 +54,11 @@ const tvSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchTVData.fulfilled, (state, action) => {
-        const {
-          airingToday,
-          upcoming,
-          popular,
-          topRated,
-        } = action.payload as Payload;
-        state.airingToday = airingToday;
-        state.upcoming = upcoming;
-        state.popular = popular;
-        state.topRated = topRated;
+        const {airingToday, upcoming, popular, topRated} = action.payload;
+        state.airingToday = shuffleArray(airingToday) as TV[];
+        state.upcoming = shuffleArray(upcoming) as TV[];
+        state.popular = shuffleArray(popular) as TV[];
+        state.topRated = shuffleArray(topRated) as TV[];
         state.loading = false;
       })
       .addCase(fetchTVData.rejected, (state, action) => {

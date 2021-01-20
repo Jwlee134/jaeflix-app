@@ -11,7 +11,6 @@ import Credits from './Credits';
 import RelatedStuffs from './RelatedStuffs';
 
 import useDetailLogic from '~/hooks/useDetailLogic';
-import useLanguage from '~/hooks/useLanguage';
 
 const Container = styled.ScrollView`
   background-color: #141414;

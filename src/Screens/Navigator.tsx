@@ -120,7 +120,7 @@ const SearchNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="SearchMovieDetail"
+        name="MovieDetail"
         component={Detail}
         options={{
           title: 'Jaeflix',
@@ -136,7 +136,7 @@ const SearchNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="SearchTVDetail"
+        name="TVDetail"
         component={Detail}
         options={{
           title: 'Jaeflix',
@@ -163,12 +163,13 @@ const Navigator = () => {
     const value = await AsyncStorage.getItem('language');
     if (value) {
       dispatch(setLanguage(value));
+    } else if (!value) {
+      await AsyncStorage.setItem('language', 'ko-KR');
     }
     setInitialize(false);
   };
 
   useEffect(() => {
-    console.log('Initializing...');
     handleLanguage();
   }, []);
 

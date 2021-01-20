@@ -7,9 +7,9 @@ import {RootState} from '~/store';
 import styled from 'styled-components/native';
 
 import BigCatalog from '~/Components/BigCatalog';
-import {mixArray} from '~/utils/mixArray';
 import {useRoute} from '@react-navigation/native';
 import {isMovie} from '~/@types/typeGuards';
+import {Movie, TV} from '~/@types';
 
 const Container = styled.View`
   height: 300px;
@@ -25,14 +25,14 @@ const BigCatalogList = ({onPress}: Props) => {
   const {nowPlaying} = useSelector((state: RootState) => state.movie);
   const {airingToday} = useSelector((state: RootState) => state.tv);
 
-  //const mixed = mixArray(name === 'MovieHome' ? nowPlaying : airingToday);
+  const data: (Movie | TV)[] = name === 'MovieHome' ? nowPlaying : airingToday;
 
   return (
     <Container>
       <FlatList
         horizontal={true}
         pagingEnabled={true}
-        data={name === 'MovieHome' ? nowPlaying : airingToday}
+        data={data}
         keyExtractor={(_, index) => `bigScreen-${index}`}
         initialNumToRender={20}
         renderItem={({item}) => (

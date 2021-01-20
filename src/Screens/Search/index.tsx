@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import styled from 'styled-components/native';
 
@@ -10,9 +11,8 @@ import Input from '~/Components/Input';
 import Error from '../Error';
 import Loading from '../Loading';
 import SubCatalogList from '~/Components/SubCatalogList';
-import {StackNavigationProp} from '@react-navigation/stack';
+
 import {SearchNaviParamList} from '~/@types';
-import useLanguage from '~/hooks/useLanguage';
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -65,7 +65,7 @@ const Search = ({navigation}: Props) => {
               data={movie}
               isSearch={true}
               onPress={(id: number, title: string) => {
-                navigation.navigate('SearchMovieDetail', {
+                navigation.navigate('MovieDetail', {
                   id,
                   title,
                 });
@@ -79,7 +79,7 @@ const Search = ({navigation}: Props) => {
               data={tv}
               isSearch={true}
               onPress={(id: number, title: string) => {
-                navigation.navigate('SearchTVDetail', {
+                navigation.navigate('TVDetail', {
                   id,
                   title,
                 });

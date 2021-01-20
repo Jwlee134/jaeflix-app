@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RefreshControl} from 'react-native';
@@ -14,15 +14,12 @@ import {MovieNaviParamList} from '~/@types';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchMovieData} from '~/store/movie';
-import {RootState, useAppDispatch} from '~/store';
+import {RootState} from '~/store';
 
 import useRefresh from '~/hooks/useRefresh';
+import useLanguage from '~/hooks/useLanguage';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Button, RadioButton, Dialog, Portal} from 'react-native-paper';
-import useLanguage from '~/hooks/useLanguage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {setLanguage} from '~/store/language';
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -30,7 +27,7 @@ const Container = styled.ScrollView`
 `;
 
 const LanguageButton = styled.TouchableOpacity`
-  margin-right: 8px;
+  margin-right: 12px;
 `;
 
 type NavigationProp = StackNavigationProp<MovieNaviParamList, 'MovieHome'>;
@@ -39,7 +36,7 @@ interface Props {
 }
 
 const MovieHome = ({navigation}: Props) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const {loading, topRated, popular, upcoming, error} = useSelector(
     (state: RootState) => state.movie,
   );
@@ -47,7 +44,8 @@ const MovieHome = ({navigation}: Props) => {
   const {value} = useSelector((state: RootState) => state.language);
 
   const {handleRefresh, refreshing} = useRefresh();
-  const {visible, showDialog, hideDialog} = useLanguage();
+
+  const {showDialog, renderDialog} = useLanguage();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -61,8 +59,8 @@ const MovieHome = ({navigation}: Props) => {
 
   useEffect(() => {
     SplashScreen.hide();
-    dispatch(fetchMovieData(value as string));
-  }, [dispatch, value]);
+    dispatch(fetchMovieData(value));
+  }, []);
 
   if (loading) {
     return <Loading />;
@@ -123,37 +121,7 @@ const MovieHome = ({navigation}: Props) => {
           }}
         />
       </Container>
-      <Portal>
-        <Dialog
-          visible={visible}
-          onDismiss={hideDialog}
-          style={{backgroundColor: '#252525'}}>
-          <Dialog.Title style={{color: '#ffffff'}}>Language</Dialog.Title>
-          <Dialog.Content>
-            <RadioButton.Group
-              onValueChange={(value) => {
-                dispatch(setLanguage(value));
-              }}
-              value={value}>
-              <RadioButton.Item
-                labelStyle={{color: '#ffffff'}}
-                label="한국어"
-                value="ko-KR"
-              />
-              <RadioButton.Item
-                labelStyle={{color: '#ffffff'}}
-                label="English"
-                value="en-US"
-              />
-            </RadioButton.Group>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button color="#ffffff" onPress={hideDialog}>
-              Done
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      {renderDialog()}
     </>
   );
 };

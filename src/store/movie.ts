@@ -1,15 +1,13 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {Movie} from '~/@types';
 import {movieApi} from '~/api';
+import {shuffleArray} from '~/utils/shuffleArray';
 
-interface Payload {
+interface IState {
   nowPlaying: Movie[];
   upcoming: Movie[];
   popular: Movie[];
   topRated: Movie[];
-}
-
-interface IState extends Payload {
   loading: boolean;
   error: string | null;
 }
@@ -27,7 +25,6 @@ export const fetchMovieData = createAsyncThunk(
   'movie/fetchMovie',
   async (language: string, {rejectWithValue}) => {
     try {
-      console.log(`fetching : ${language}`);
       const {
         data: {results: nowPlaying},
       } = await movieApi.nowPlaying(language);
@@ -55,16 +52,11 @@ const movieSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchMovieData.fulfilled, (state, action) => {
-        const {
-          nowPlaying,
-          upcoming,
-          popular,
-          topRated,
-        } = action.payload as Payload;
-        state.nowPlaying = nowPlaying;
-        state.upcoming = upcoming;
-        state.popular = popular;
-        state.topRated = topRated;
+        const {nowPlaying, upcoming, popular, topRated} = action.payload;
+        state.nowPlaying = shuffleArray(nowPlaying) as Movie[];
+        state.upcoming = shuffleArray(upcoming) as Movie[];
+        state.popular = shuffleArray(popular) as Movie[];
+        state.topRated = shuffleArray(topRated) as Movie[];
         state.loading = false;
       })
       .addCase(fetchMovieData.rejected, (state, action) => {

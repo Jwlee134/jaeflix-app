@@ -4,7 +4,6 @@ import styled from 'styled-components/native';
 
 import {Movie, TV} from '~/@types';
 import {isMovie} from '~/@types/typeGuards';
-import {mixArray} from '~/utils/mixArray';
 
 const Container = styled.View`
   margin: 8px 0px;
@@ -42,18 +41,12 @@ const CatalogTitle = styled.Text`
 interface Props {
   title: string;
   titleStyle?: Object;
-  data: Movie[] | TV[];
+  data: (Movie | TV)[];
   onPress: (id: number, title: string) => void;
   isSearch?: boolean;
 }
 
-const SubCatalogList = ({
-  title,
-  titleStyle,
-  data,
-  isSearch,
-  onPress,
-}: Props) => {
+const SubCatalogList = ({title, titleStyle, data, onPress}: Props) => {
   return (
     <Container>
       <InfoContainer>
@@ -82,7 +75,13 @@ const SubCatalogList = ({
                 style={{width: 100, height: 150}}
               />
               <CatalogTitle>
-                {isMovie(item) ? item.title : item.name}
+                {isMovie(item)
+                  ? item.title.length > 15
+                    ? `${item.title.substring(0, 15)}..`
+                    : item.title
+                  : item.name.length > 15
+                  ? `${item.name.substring(0, 14)}..`
+                  : item.name}
               </CatalogTitle>
             </CatalogImgContainer>
           )}

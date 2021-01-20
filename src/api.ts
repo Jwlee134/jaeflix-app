@@ -9,7 +9,7 @@ const api = axios.create({
   },
 });
 
-const page = Math.round(Math.random() * 2 + 1);
+const page = Math.round(Math.random() * 5 + 1);
 
 export const movieApi: MovieApi = {
   nowPlaying: (language: string) =>

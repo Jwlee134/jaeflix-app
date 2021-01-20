@@ -61,17 +61,11 @@ const useDetailLogic = (id: number, name: string) => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      if (name === 'MovieDetail') {
-        fetchMovieDetail();
-      } else if (name === 'TVDetail') {
-        fetchTVDetail();
-      } else if (name === 'SearchMovieDetail') {
-        fetchMovieDetail();
-      } else {
-        fetchTVDetail();
-      }
-    }, 100);
+    if (name === 'MovieDetail') {
+      fetchMovieDetail();
+    } else if (name === 'TVDetail') {
+      fetchTVDetail();
+    }
   }, []);
 
   return {detail, casts, crews, loading, error, similar};

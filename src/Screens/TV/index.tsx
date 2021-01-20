@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RefreshControl} from 'react-native';
 
@@ -16,10 +16,17 @@ import Error from '../Error';
 import Loading from '../Loading';
 import BigCatalogList from '~/Components/BigCatalogList';
 import SubCatalogList from '~/Components/SubCatalogList';
+import useLanguage from '~/hooks/useLanguage';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Container = styled.ScrollView`
   flex: 1;
   background-color: #141414;
+`;
+
+const LanguageButton = styled.TouchableOpacity`
+  margin-right: 12px;
 `;
 
 type NavigationProp = StackNavigationProp<TVNaviParamList, 'TVHome'>;
@@ -34,11 +41,23 @@ const TVHome = ({navigation}: Props) => {
   );
   const {handleRefresh, refreshing} = useRefresh(false);
 
+  const {showDialog, renderDialog} = useLanguage();
+
   const {value} = useSelector((state: RootState) => state.language);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <LanguageButton>
+          <Icon name="language" size={25} onPress={showDialog} />
+        </LanguageButton>
+      ),
+    });
+  }, [navigation, showDialog]);
 
   useEffect(() => {
     dispatch(fetchTVData(value));
-  }, [dispatch, value]);
+  }, []);
 
   if (loading) {
     return <Loading />;
@@ -47,57 +66,60 @@ const TVHome = ({navigation}: Props) => {
     return <Error message={error} />;
   }
   return (
-    <Container
-      refreshControl={
-        <RefreshControl
-          onRefresh={handleRefresh}
-          refreshing={refreshing}
-          colors={['#ffffff']}
-          progressBackgroundColor="#141414"
+    <>
+      <Container
+        refreshControl={
+          <RefreshControl
+            onRefresh={handleRefresh}
+            refreshing={refreshing}
+            colors={['#ffffff']}
+            progressBackgroundColor="#141414"
+          />
+        }>
+        <BigCatalogList
+          onPress={(id: number, title: string) => {
+            navigation.navigate('TVDetail', {
+              id,
+              title,
+            });
+          }}
         />
-      }>
-      <BigCatalogList
-        onPress={(id: number, title: string) => {
-          navigation.push('TVDetail', {
-            id,
-            title,
-          });
-        }}
-      />
-      <SubCatalogList
-        title="인기"
-        titleStyle={{fontSize: 18, paddingLeft: 8}}
-        data={popular}
-        onPress={(id: number, title: string) => {
-          navigation.push('TVDetail', {
-            id,
-            title,
-          });
-        }}
-      />
-      <SubCatalogList
-        title="최고 평점"
-        titleStyle={{fontSize: 18, paddingLeft: 8}}
-        data={topRated}
-        onPress={(id: number, title: string) => {
-          navigation.push('TVDetail', {
-            id,
-            title,
-          });
-        }}
-      />
-      <SubCatalogList
-        title="방영 예정"
-        titleStyle={{fontSize: 18, paddingLeft: 8}}
-        data={upcoming}
-        onPress={(id: number, title: string) => {
-          navigation.push('TVDetail', {
-            id,
-            title,
-          });
-        }}
-      />
-    </Container>
+        <SubCatalogList
+          title="인기"
+          titleStyle={{fontSize: 18, paddingLeft: 8}}
+          data={popular}
+          onPress={(id: number, title: string) => {
+            navigation.navigate('TVDetail', {
+              id,
+              title,
+            });
+          }}
+        />
+        <SubCatalogList
+          title="최고 평점"
+          titleStyle={{fontSize: 18, paddingLeft: 8}}
+          data={topRated}
+          onPress={(id: number, title: string) => {
+            navigation.navigate('TVDetail', {
+              id,
+              title,
+            });
+          }}
+        />
+        <SubCatalogList
+          title="방영 예정"
+          titleStyle={{fontSize: 18, paddingLeft: 8}}
+          data={upcoming}
+          onPress={(id: number, title: string) => {
+            navigation.navigate('TVDetail', {
+              id,
+              title,
+            });
+          }}
+        />
+      </Container>
+      {renderDialog()}
+    </>
   );
 };
 
