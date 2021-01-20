@@ -29,20 +29,20 @@ const initialState: IState = {
 
 export const fetchTVData = createAsyncThunk(
   'tv/fetchTV',
-  async (_, {rejectWithValue}) => {
+  async (language: string, {rejectWithValue}) => {
     try {
       const {
         data: {results: airingToday},
-      } = await tvApi.airingToday();
+      } = await tvApi.airingToday(language);
       const {
         data: {results: upcoming},
-      } = await tvApi.upcoming();
+      } = await tvApi.upcoming(language);
       const {
         data: {results: popular},
-      } = await tvApi.popular();
+      } = await tvApi.popular(language);
       const {
         data: {results: topRated},
-      } = await tvApi.topRated();
+      } = await tvApi.topRated(language);
       return {airingToday, upcoming, popular, topRated};
     } catch (error) {
       console.log(error);

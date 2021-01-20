@@ -13,11 +13,10 @@ const Container = styled.View`
 const InfoContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  padding: 8px 16px;
+  padding: 8px 0px;
 `;
 
 const Title = styled.Text`
-  font-size: 18px;
   color: #ffffff;
   font-weight: bold;
 `;
@@ -26,7 +25,7 @@ const CatalogContainer = styled.View``;
 
 const CatalogImgContainer = styled.TouchableOpacity`
   margin: 0px 5px;
-  width: 130px;
+  width: 100px;
 `;
 
 const CatalogImage = styled.Image`
@@ -37,34 +36,41 @@ const CatalogTitle = styled.Text`
   margin: 5px 0px;
   margin-left: 2.5px;
   color: #ffffff;
-  font-size: 12px;
+  font-size: 11px;
 `;
 
 interface Props {
   title: string;
+  titleStyle?: Object;
   data: Movie[] | TV[];
-  onPress: (id: number) => void;
+  onPress: (id: number, title: string) => void;
   isSearch?: boolean;
 }
 
-const SubCatalogList = ({title, data, isSearch, onPress}: Props) => {
-  const mixed = mixArray(data);
-
+const SubCatalogList = ({
+  title,
+  titleStyle,
+  data,
+  isSearch,
+  onPress,
+}: Props) => {
   return (
     <Container>
       <InfoContainer>
-        <Title>{title}</Title>
+        <Title style={titleStyle}>{title}</Title>
       </InfoContainer>
       <CatalogContainer>
         <FlatList
           horizontal={true}
-          data={isSearch ? data : mixed}
+          data={data}
           keyExtractor={(item, index) => `catalogList-${item.id}-${index}`}
           initialNumToRender={20}
           renderItem={({item}) => (
             <CatalogImgContainer
-              activeOpacity={1}
-              onPress={() => onPress(item.id)}>
+              activeOpacity={0.7}
+              onPress={() =>
+                onPress(item.id, isMovie(item) ? item.title : item.name)
+              }>
               <CatalogImage
                 source={
                   item.poster_path
@@ -73,7 +79,7 @@ const SubCatalogList = ({title, data, isSearch, onPress}: Props) => {
                       }
                     : require('~/Assets/Images/noImg.png')
                 }
-                style={{width: 130, height: 180}}
+                style={{width: 100, height: 150}}
               />
               <CatalogTitle>
                 {isMovie(item) ? item.title : item.name}

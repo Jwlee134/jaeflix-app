@@ -1,12 +1,16 @@
 import React from 'react';
 import {FlatList} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
+
 import styled from 'styled-components/native';
-import {RootState} from '~/store';
+
+import {Cast, Crew} from '~/@types';
+
+import Error from '../Error';
 
 const Container = styled.View`
   background-color: #141414;
   flex: 1;
+  padding: 0px 16px;
 `;
 
 const Title = styled.Text`
@@ -18,7 +22,7 @@ const Title = styled.Text`
 
 const CreditContainer = styled.View`
   width: 100px;
-  margin: 0px 4px;
+  margin: 0px 5px;
 `;
 
 const CreditImage = styled.Image`
@@ -38,16 +42,18 @@ const CreditJob = styled.Text`
   margin-bottom: 5px;
 `;
 
-const Credits = () => {
-  const {crew, cast} = useSelector((state: RootState) => state.detail);
+interface Props {
+  crew: Crew[];
+  cast: Cast[];
+}
 
+const Credits = ({crew, cast}: Props) => {
   return (
     <Container>
       {crew.length > 0 && (
         <>
           <Title>제작</Title>
           <FlatList
-            style={{}}
             horizontal={true}
             data={crew}
             keyExtractor={(_, index) => `crewList-${index}`}

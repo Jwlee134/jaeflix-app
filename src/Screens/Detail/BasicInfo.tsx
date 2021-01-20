@@ -1,15 +1,14 @@
 import React from 'react';
 import {Dimensions} from 'react-native';
-import {useSelector} from 'react-redux';
+
 import styled from 'styled-components/native';
+
+import {MovieDetail, TVDetail} from '~/@types';
 import {isMovieDetail} from '~/@types/typeGuards';
-import {RootState} from '~/store';
-import Credits from './Credits';
 
 const Container = styled.View`
   background-color: #141414;
-  flex: 1;
-  padding: 0px 16px;
+  padding: 0px 12px;
 `;
 
 const ContainerTitle = styled.Text`
@@ -39,9 +38,11 @@ const Description = styled.Text`
   opacity: 0.8;
 `;
 
-const BasicInfo = () => {
-  const {detail} = useSelector((state: RootState) => state.detail);
+interface Props {
+  detail: MovieDetail | TVDetail;
+}
 
+const BasicInfo = ({detail}: Props) => {
   const runtime = isMovieDetail(detail)
     ? detail.runtime
     : detail?.episode_run_time[0];
@@ -57,18 +58,20 @@ const BasicInfo = () => {
         <InfoContainer>
           <InfoRow>
             <LabelInfo>
-              시간 : {runtime ? `${runtime}분` : '등록되지 않음'}
+              시간 : {runtime ? `${runtime}분` : '표시할 정보가 없습니다.'}
             </LabelInfo>
           </InfoRow>
           <InfoRow>
-            <LabelInfo>개봉 : {date ? date : '등록되지 않음'}</LabelInfo>
+            <LabelInfo>
+              개봉 : {date ? date : '표시할 정보가 없습니다.'}
+            </LabelInfo>
           </InfoRow>
           <InfoRow>
             <LabelInfo>
               평점 :{' '}
               {detail.vote_average && detail.vote_count
                 ? `${detail.vote_average} (${detail.vote_count}명 참여)`
-                : '등록되지 않음'}
+                : '표시할 정보가 없습니다.'}
             </LabelInfo>
           </InfoRow>
           <InfoRow>
@@ -80,14 +83,14 @@ const BasicInfo = () => {
                       ? country.name
                       : `${country.name}, `,
                   )
-                : '등록되지 않음'}
+                : '표시할 정보가 없습니다.'}
             </LabelInfo>
           </InfoRow>
         </InfoContainer>
         <DescriptionContainer>
           <ContainerTitle>줄거리</ContainerTitle>
           <Description>
-            {detail.overview ? detail.overview : '등록되지 않음'}
+            {detail.overview ? detail.overview : '표시할 정보가 없습니다.'}
           </Description>
         </DescriptionContainer>
       </Container>

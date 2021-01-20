@@ -34,9 +34,11 @@ const TVHome = ({navigation}: Props) => {
   );
   const {handleRefresh, refreshing} = useRefresh(false);
 
+  const {value} = useSelector((state: RootState) => state.language);
+
   useEffect(() => {
-    dispatch(fetchTVData());
-  }, [dispatch]);
+    dispatch(fetchTVData(value));
+  }, [dispatch, value]);
 
   if (loading) {
     return <Loading />;
@@ -55,40 +57,43 @@ const TVHome = ({navigation}: Props) => {
         />
       }>
       <BigCatalogList
-        onPress={(id: number) => {
-          navigation.navigate('TVDetail', {
+        onPress={(id: number, title: string) => {
+          navigation.push('TVDetail', {
             id,
-            isMovie: false,
+            title,
           });
         }}
       />
       <SubCatalogList
         title="인기"
+        titleStyle={{fontSize: 18, paddingLeft: 8}}
         data={popular}
-        onPress={(id: number) => {
-          navigation.navigate('TVDetail', {
+        onPress={(id: number, title: string) => {
+          navigation.push('TVDetail', {
             id,
-            isMovie: false,
+            title,
           });
         }}
       />
       <SubCatalogList
         title="최고 평점"
+        titleStyle={{fontSize: 18, paddingLeft: 8}}
         data={topRated}
-        onPress={(id: number) => {
-          navigation.navigate('TVDetail', {
+        onPress={(id: number, title: string) => {
+          navigation.push('TVDetail', {
             id,
-            isMovie: false,
+            title,
           });
         }}
       />
       <SubCatalogList
         title="방영 예정"
+        titleStyle={{fontSize: 18, paddingLeft: 8}}
         data={upcoming}
-        onPress={(id: number) => {
-          navigation.navigate('TVDetail', {
+        onPress={(id: number, title: string) => {
+          navigation.push('TVDetail', {
             id,
-            isMovie: false,
+            title,
           });
         }}
       />

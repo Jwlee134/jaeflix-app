@@ -25,20 +25,21 @@ const initialState: IState = {
 
 export const fetchMovieData = createAsyncThunk(
   'movie/fetchMovie',
-  async (_, {rejectWithValue}) => {
+  async (language: string, {rejectWithValue}) => {
     try {
+      console.log(`fetching : ${language}`);
       const {
         data: {results: nowPlaying},
-      } = await movieApi.nowPlaying();
+      } = await movieApi.nowPlaying(language);
       const {
         data: {results: upcoming},
-      } = await movieApi.upcoming();
+      } = await movieApi.upcoming(language);
       const {
         data: {results: popular},
-      } = await movieApi.popular();
+      } = await movieApi.popular(language);
       const {
         data: {results: topRated},
-      } = await movieApi.topRated();
+      } = await movieApi.topRated(language);
       return {nowPlaying, upcoming, popular, topRated};
     } catch (error) {
       console.log(error);

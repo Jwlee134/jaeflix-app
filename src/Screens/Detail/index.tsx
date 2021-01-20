@@ -1,21 +1,17 @@
-import React, {useEffect, useLayoutEffect} from 'react';
-import {RouteProp} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {useSelector} from 'react-redux';
-
-import {MovieNaviParamList, TVNaviParamList} from '~/@types';
+import React, {useLayoutEffect} from 'react';
 import {isMovieDetail} from '~/@types/typeGuards';
 
 import styled from 'styled-components/native';
-
-import {RootState, useAppDispatch} from '~/store';
-import {fetchMovieDetail, fetchTVDetail} from '~/store/detail';
 
 import BigCatalog from '~/Components/BigCatalog';
 import BasicInfo from './BasicInfo';
 import Loading from '../Loading';
 import Error from '../Error';
+import Credits from './Credits';
+import RelatedStuffs from './RelatedStuffs';
+
+import useDetailLogic from '~/hooks/useDetailLogic';
+import useLanguage from '~/hooks/useLanguage';
 
 const Container = styled.ScrollView`
   background-color: #141414;
@@ -23,44 +19,31 @@ const Container = styled.ScrollView`
 
 const SubInfoContainer = styled.View``;
 
-type ProfileScreenNavigationProp = StackNavigationProp<
-  MovieNaviParamList | TVNaviParamList,
-  'Detail'
+/* type ProfileScreenNavigationProp = StackNavigationProp<
+  MovieNaviParamList | TVNaviParamList
 >;
-type ProfileScreenRouteProp = RouteProp<
-  MovieNaviParamList | TVNaviParamList,
-  'Detail'
->;
+type ProfileScreenRouteProp = RouteProp<MovieNaviParamList | TVNaviParamList>;
 interface Props {
   navigation: ProfileScreenNavigationProp;
   route: ProfileScreenRouteProp;
-}
+} */
 
-const Detail = ({navigation, route}: Props) => {
-  const {loading, detail, error} = useSelector(
-    (state: RootState) => state.detail,
+const Detail = ({navigation, route}: any) => {
+  const {
+    params: {id, title},
+    name,
+  } = route;
+
+  const {detail, casts, crews, loading, error, similar} = useDetailLogic(
+    id,
+    name,
   );
-  const dispatch = useAppDispatch();
-  const Tab = createMaterialTopTabNavigator();
-
-  const title = detail && isMovieDetail(detail) ? detail.title : detail?.name;
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: title ? title : 'Jaeflix',
+      title,
     });
   }, [navigation, title]);
-
-  useEffect(() => {
-    console.log(route.name);
-    const {id, isMovie} = route.params;
-    const promise = isMovie
-      ? dispatch(fetchMovieDetail(id))
-      : dispatch(fetchTVDetail(id));
-    return () => {
-      promise.abort();
-    };
-  }, [dispatch, route.params]);
 
   if (loading) {
     return <Loading />;
@@ -80,14 +63,13 @@ const Detail = ({navigation, route}: Props) => {
           )}
         />
         <SubInfoContainer>
-          <Tab.Navigator
-            tabBarOptions={{
-              style: {backgroundColor: '#141414'},
-              indicatorStyle: {backgroundColor: '#ffffff'},
-              activeTintColor: '#FFFFFF',
-            }}>
-            <Tab.Screen name="기본 정보" component={BasicInfo} />
-          </Tab.Navigator>
+          <BasicInfo detail={detail} />
+          <Credits crew={crews} cast={casts} />
+          <RelatedStuffs
+            videos={detail.videos.results}
+            similar={similar}
+            name={name && name}
+          />
         </SubInfoContainer>
       </Container>
     )

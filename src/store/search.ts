@@ -16,16 +16,21 @@ const initialState: IState = {
   error: null,
 };
 
+interface Props {
+  term: string;
+  value: string;
+}
+
 export const fetchResults = createAsyncThunk(
   'search/fetchResults',
-  async (term: string, {rejectWithValue}) => {
+  async ({term, value}: Props, {rejectWithValue}) => {
     try {
       const {
         data: {results: movie},
-      } = await movieApi.search(term);
+      } = await movieApi.search(term, value);
       const {
         data: {results: tv},
-      } = await tvApi.search(term);
+      } = await tvApi.search(term, value);
       return {movie, tv};
     } catch (error) {
       console.log(error);

@@ -12,6 +12,7 @@ import Loading from '../Loading';
 import SubCatalogList from '~/Components/SubCatalogList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {SearchNaviParamList} from '~/@types';
+import useLanguage from '~/hooks/useLanguage';
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -28,11 +29,13 @@ const Search = ({navigation}: Props) => {
   const {movie, tv, loading, error} = useSelector(
     (state: RootState) => state.search,
   );
+  const {value} = useSelector((state: RootState) => state.language);
+
   const dispatch = useDispatch();
   const [term, setTerm] = useState('');
 
   const onSubmitEditing = () => {
-    dispatch(fetchResults(term));
+    dispatch(fetchResults({term, value}));
   };
 
   const onChangeText = (text: string) => {
@@ -58,12 +61,13 @@ const Search = ({navigation}: Props) => {
           {movie && movie.length > 0 && (
             <SubCatalogList
               title="영화 검색 결과"
+              titleStyle={{fontSize: 18, paddingLeft: 8}}
               data={movie}
               isSearch={true}
-              onPress={(id: number) => {
-                navigation.navigate('MovieDetail', {
+              onPress={(id: number, title: string) => {
+                navigation.navigate('SearchMovieDetail', {
                   id,
-                  isMovie: true,
+                  title,
                 });
               }}
             />
@@ -71,12 +75,13 @@ const Search = ({navigation}: Props) => {
           {tv && tv.length > 0 && (
             <SubCatalogList
               title="TV 프로그램 검색 결과"
+              titleStyle={{fontSize: 18, paddingLeft: 8}}
               data={tv}
               isSearch={true}
-              onPress={(id: number) => {
-                navigation.navigate('TVDetail', {
+              onPress={(id: number, title: string) => {
+                navigation.navigate('SearchTVDetail', {
                   id,
-                  isMovie: false,
+                  title,
                 });
               }}
             />

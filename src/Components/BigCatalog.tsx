@@ -55,7 +55,7 @@ interface Props {
   image: string | null;
   title: string;
   subtitle: string | string[];
-  onPress?: (id: number) => void;
+  onPress?: (id: number, title: string) => void;
 }
 
 const BigCatalog = ({
@@ -69,7 +69,7 @@ const BigCatalog = ({
   return (
     <Container
       activeOpacity={1}
-      onPress={onPress ? () => onPress(id) : undefined}>
+      onPress={onPress ? () => onPress(id, title) : undefined}>
       <CatalogImg
         source={
           image

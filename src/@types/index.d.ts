@@ -6,7 +6,6 @@ type MovieNaviParamList = {
   MovieHome: undefined;
   Detail: {
     id: number;
-    isMovie: boolean;
   };
 };
 
@@ -14,7 +13,6 @@ type TVNaviParamList = {
   TVHome: undefined;
   Detail: {
     id: number;
-    isMovie: boolean;
   };
 };
 
@@ -22,11 +20,11 @@ type SearchNaviParamList = {
   Search: undefined;
   Detail: {
     id: number;
-    isMovie: boolean;
   };
 };
 
-// Movie
+// Movie & TV
+
 interface Genre {
   id: number;
   name: string;
@@ -112,7 +110,7 @@ interface CommonItems {
   id: number;
   poster_path: string | null;
   overview: string;
-  original_language: string;
+  original_;
   backdrop_path: string | null;
   popularity: number;
   vote_count: number;
@@ -156,6 +154,9 @@ interface TVDetail extends TV {
   status: string;
   tagline: string;
   type: string;
+  videos: {
+    results: Video[];
+  };
 }
 
 interface CommonList<T> {
@@ -178,6 +179,9 @@ interface MovieDetail extends Movie {
   spoken_languages: Languages[];
   status: string;
   tagline: string | null;
+  videos: {
+    results: Video[];
+  };
 }
 
 interface CommonCredit {
@@ -211,23 +215,35 @@ interface Credits {
 
 // API
 interface MovieApi {
-  nowPlaying: () => Promise<AxiosResponse<CommonList<Movie>>>;
-  upcoming: () => Promise<AxiosResponse<CommonList<Movie>>>;
-  popular: () => Promise<AxiosResponse<CommonList<Movie>>>;
-  topRated: () => Promise<AxiosResponse<CommonList<Movie>>>;
-  detail: (id: number) => Promise<AxiosResponse<MovieDetail>>;
-  similar: (id: number) => Promise<AxiosResponse<CommonList<Movie>>>;
-  credits: (id: number) => Promise<AxiosResponse<Credits>>;
-  search: (term: string) => Promise<AxiosResponse<CommonList<Movie>>>;
+  nowPlaying: (language: string) => Promise<AxiosResponse<CommonList<Movie>>>;
+  upcoming: (language: string) => Promise<AxiosResponse<CommonList<Movie>>>;
+  popular: (language: string) => Promise<AxiosResponse<CommonList<Movie>>>;
+  topRated: (language: string) => Promise<AxiosResponse<CommonList<Movie>>>;
+  detail: (id: number, language: string) => Promise<AxiosResponse<MovieDetail>>;
+  similar: (
+    id: number,
+    language: string,
+  ) => Promise<AxiosResponse<CommonList<Movie>>>;
+  credits: (id: number, language: string) => Promise<AxiosResponse<Credits>>;
+  search: (
+    term: string,
+    language: string,
+  ) => Promise<AxiosResponse<CommonList<Movie>>>;
 }
 
 interface TVApi {
-  airingToday: () => Promise<AxiosResponse<CommonList<TV>>>;
-  popular: () => Promise<AxiosResponse<CommonList<TV>>>;
-  topRated: () => Promise<AxiosResponse<CommonList<TV>>>;
-  upcoming: () => Promise<AxiosResponse<CommonList<TV>>>;
-  detail: (id: number) => Promise<AxiosResponse<TVDetail>>;
-  similar: (id: number) => Promise<AxiosResponse<CommonList<TV>>>;
-  credits: (id: number) => Promise<AxiosResponse<Credits>>;
-  search: (term: string) => Promise<AxiosResponse<CommonList<TV>>>;
+  airingToday: (language: string) => Promise<AxiosResponse<CommonList<TV>>>;
+  popular: (language: string) => Promise<AxiosResponse<CommonList<TV>>>;
+  topRated: (language: string) => Promise<AxiosResponse<CommonList<TV>>>;
+  upcoming: (language: string) => Promise<AxiosResponse<CommonList<TV>>>;
+  detail: (id: number, language: string) => Promise<AxiosResponse<TVDetail>>;
+  similar: (
+    id: number,
+    language: string,
+  ) => Promise<AxiosResponse<CommonList<TV>>>;
+  credits: (id: number, language: string) => Promise<AxiosResponse<Credits>>;
+  search: (
+    term: string,
+    language: string,
+  ) => Promise<AxiosResponse<CommonList<TV>>>;
 }

@@ -17,7 +17,7 @@ const Container = styled.View`
 `;
 
 interface Props {
-  onPress: (id: number) => void;
+  onPress: (id: number, title: string) => void;
 }
 
 const BigCatalogList = ({onPress}: Props) => {
@@ -25,14 +25,14 @@ const BigCatalogList = ({onPress}: Props) => {
   const {nowPlaying} = useSelector((state: RootState) => state.movie);
   const {airingToday} = useSelector((state: RootState) => state.tv);
 
-  const mixed = mixArray(name === 'MovieHome' ? nowPlaying : airingToday);
+  //const mixed = mixArray(name === 'MovieHome' ? nowPlaying : airingToday);
 
   return (
     <Container>
       <FlatList
         horizontal={true}
         pagingEnabled={true}
-        data={mixed}
+        data={name === 'MovieHome' ? nowPlaying : airingToday}
         keyExtractor={(_, index) => `bigScreen-${index}`}
         initialNumToRender={20}
         renderItem={({item}) => (
