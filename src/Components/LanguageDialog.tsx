@@ -9,16 +9,23 @@ interface Props {
   value: string;
   dispatch: Dispatch<any>;
   visible: boolean;
-  hideDialog: () => void;
+  saveLanguage: () => void;
+  closeDialog: () => void;
 }
 
-const LanguageDialog = ({value, dispatch, visible, hideDialog}: Props) => {
+const LanguageDialog = ({
+  value,
+  dispatch,
+  visible,
+  saveLanguage,
+  closeDialog,
+}: Props) => {
   const {t} = useTranslation();
   return (
     <Portal>
       <Dialog
         visible={visible}
-        onDismiss={hideDialog}
+        onDismiss={closeDialog}
         style={{backgroundColor: '#252525'}}>
         <Dialog.Title style={{color: '#ffffff'}}>Language</Dialog.Title>
         <Dialog.Content>
@@ -40,7 +47,7 @@ const LanguageDialog = ({value, dispatch, visible, hideDialog}: Props) => {
           </RadioButton.Group>
         </Dialog.Content>
         <Dialog.Actions>
-          <Button color="#ffffff" onPress={hideDialog}>
+          <Button color="#ffffff" onPress={saveLanguage}>
             {t('확인')}
           </Button>
         </Dialog.Actions>

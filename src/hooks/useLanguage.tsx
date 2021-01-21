@@ -18,7 +18,7 @@ const useLanguage = () => {
 
   const showDialog = () => setVisible(true);
 
-  const hideDialog = async () => {
+  const saveLanguage = async () => {
     setVisible(false);
     const currentValue = await AsyncStorage.getItem('language');
     if (currentValue !== value && value === 'ko-KR') {
@@ -33,12 +33,15 @@ const useLanguage = () => {
     }
   };
 
+  const closeDialog = () => setVisible(false);
+
   const renderDialog = () => (
     <LanguageDialog
       value={value}
       dispatch={dispatch}
       visible={visible}
-      hideDialog={hideDialog}
+      saveLanguage={saveLanguage}
+      closeDialog={closeDialog}
     />
   );
 
