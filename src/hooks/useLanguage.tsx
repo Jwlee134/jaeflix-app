@@ -20,14 +20,11 @@ const useLanguage = () => {
 
   const saveLanguage = async () => {
     setVisible(false);
-    const currentValue = await AsyncStorage.getItem('language');
-    if (currentValue !== value && value === 'ko-KR') {
-      await AsyncStorage.setItem('language', value);
+    if (value === 'ko-KR') {
       changelanguage('ko');
       RNRestart.Restart();
     }
-    if (currentValue !== value && value === 'en-US') {
-      await AsyncStorage.setItem('language', value);
+    if (value === 'en-US') {
       changelanguage('en');
       RNRestart.Restart();
     }

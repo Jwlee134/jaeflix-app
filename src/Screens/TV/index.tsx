@@ -11,12 +11,12 @@ import styled from 'styled-components/native';
 import {TVNaviParamList} from '~/@types';
 
 import useRefresh from '~/hooks/useRefresh';
+import useLanguage from '~/hooks/useLanguage';
 
 import Error from '../Error';
 import Loading from '../Loading';
 import BigCatalogList from '~/Components/BigCatalogList';
 import SubCatalogList from '~/Components/SubCatalogList';
-import useLanguage from '~/hooks/useLanguage';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useTranslation} from 'react-i18next';
@@ -60,7 +60,7 @@ const TVHome = ({navigation}: Props) => {
 
   useEffect(() => {
     dispatch(fetchTVData({page: 1, value}));
-  }, [dispatch, value]);
+  }, []);
 
   if (loading) {
     return <Loading />;

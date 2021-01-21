@@ -30,8 +30,8 @@ const LanguageDialog = ({
         <Dialog.Title style={{color: '#ffffff'}}>Language</Dialog.Title>
         <Dialog.Content>
           <RadioButton.Group
-            onValueChange={(value) => {
-              dispatch(setLanguage(value));
+            onValueChange={(newValue) => {
+              dispatch(setLanguage(newValue));
             }}
             value={value}>
             <RadioButton.Item

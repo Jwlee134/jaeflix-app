@@ -1,4 +1,8 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit';
+import {
+  combineReducers,
+  configureStore,
+  getDefaultMiddleware,
+} from '@reduxjs/toolkit';
 
 import movie from './movie';
 // import detail from './detail';
@@ -8,6 +12,14 @@ import language from './language';
 import wishList from './wishList';
 
 import {useDispatch} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {PERSIST, persistReducer, persistStore} from 'redux-persist';
+
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+  blacklist: ['movie', 'tv'],
+};
 
 const rootReducer = combineReducers({
   movie,
@@ -18,11 +30,21 @@ const rootReducer = combineReducers({
   wishList,
 });
 
-const store = configureStore({reducer: rootReducer});
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [PERSIST],
+    },
+  }),
+});
 
 export type RootState = ReturnType<typeof rootReducer>;
-
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export default store;
+
+export const persitor = persistStore(store);

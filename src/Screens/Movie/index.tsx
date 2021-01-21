@@ -21,7 +21,6 @@ import useLanguage from '~/hooks/useLanguage';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useTranslation} from 'react-i18next';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -64,7 +63,7 @@ const MovieHome = ({navigation}: Props) => {
   useEffect(() => {
     SplashScreen.hide();
     dispatch(fetchMovieData({page: 1, value}));
-  }, [dispatch, value]);
+  }, []);
 
   if (loading) {
     return <Loading />;

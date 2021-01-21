@@ -20,11 +20,12 @@
   "출연": "Cast",
   "추천 영화": "Recommendations",
   "추천 TV 프로그램": "Recommendations",
-  "키워드를 입력하세요": "Write a Keyword.",
+  "키워드를 입력하세요": "Write a Keyword...",
   "영화 검색 결과": "Movie Results",
   "TV 프로그램 검색 결과": "TV Show Results",
-  "검색 결과가 없습니다": "No Results.",
+  "검색 결과가 없습니다": "No Results sorry :(",
   "확인": "Done",
   "영화": "Movie",
-  "TV 프로그램": "TV Show"
+  "TV 프로그램": "TV Show",
+  "빈 위시리스트": "Liked items will be displayed here!"
 }
