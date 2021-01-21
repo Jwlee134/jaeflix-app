@@ -8,7 +8,7 @@ import BasicInfo from './BasicInfo';
 import Loading from '../Loading';
 import Error from '../Error';
 import Credits from './Credits';
-import RelatedStuffs from './RelatedStuffs';
+import Similar from './Similar';
 
 import useDetailLogic from '~/hooks/useDetailLogic';
 
@@ -64,11 +64,7 @@ const Detail = ({navigation, route}: any) => {
         <SubInfoContainer>
           <BasicInfo detail={detail} />
           <Credits crew={crews} cast={casts} />
-          <RelatedStuffs
-            videos={detail.videos.results}
-            similar={similar}
-            name={name && name}
-          />
+          <Similar similar={similar} name={name && name} />
         </SubInfoContainer>
       </Container>
     )

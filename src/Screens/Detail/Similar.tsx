@@ -15,12 +15,11 @@ const Container = styled.View`
 `;
 
 interface Props {
-  videos: Video[];
   similar: Movie[] | TV[];
   name: string;
 }
 
-const RelatedStuffs = ({videos, similar, name}: Props) => {
+const Similar = ({similar, name}: Props) => {
   let title: string;
   const {t} = useTranslation();
   const navigation = useNavigation();
@@ -51,4 +50,4 @@ const RelatedStuffs = ({videos, similar, name}: Props) => {
   );
 };
 
-export default RelatedStuffs;
+export default Similar;
