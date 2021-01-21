@@ -1,11 +1,10 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {FlatList} from 'react-native-gesture-handler';
 
 import styled from 'styled-components/native';
 
 import {Cast, Crew} from '~/@types';
-
-import Error from '../Error';
 
 const Container = styled.View`
   background-color: #141414;
@@ -48,11 +47,13 @@ interface Props {
 }
 
 const Credits = ({crew, cast}: Props) => {
+  const {t} = useTranslation();
+
   return (
     <Container>
       {crew.length > 0 && (
         <>
-          <Title>제작</Title>
+          <Title>{t('제작')}</Title>
           <FlatList
             horizontal={true}
             data={crew}
@@ -81,7 +82,7 @@ const Credits = ({crew, cast}: Props) => {
       )}
       {cast.length > 0 && (
         <>
-          <Title>출연</Title>
+          <Title>{t('출연')}</Title>
           <FlatList
             horizontal={true}
             data={cast}

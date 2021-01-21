@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {Dimensions} from 'react-native';
 
 import styled from 'styled-components/native';
@@ -51,47 +52,49 @@ const BasicInfo = ({detail}: Props) => {
     ? detail.release_date
     : detail?.first_air_date;
 
+  const {t} = useTranslation();
+
   return (
     detail && (
       <Container style={{width: Dimensions.get('window').width}}>
-        <ContainerTitle>상세 정보</ContainerTitle>
+        <ContainerTitle>{t('상세 정보')}</ContainerTitle>
         <InfoContainer>
           <InfoRow>
             <LabelInfo>
-              시간 : {runtime ? `${runtime}분` : '표시할 정보가 없습니다.'}
+              {t('시간')} : {runtime ? t('분', {time: runtime}) : ' -'}
             </LabelInfo>
           </InfoRow>
           <InfoRow>
             <LabelInfo>
-              개봉 : {date ? date : '표시할 정보가 없습니다.'}
+              {t('개봉')} : {date ? date : ' -'}
             </LabelInfo>
           </InfoRow>
           <InfoRow>
             <LabelInfo>
-              평점 :{' '}
+              {t('평점')} :{' '}
               {detail.vote_average && detail.vote_count
-                ? `${detail.vote_average} (${detail.vote_count}명 참여)`
-                : '표시할 정보가 없습니다.'}
+                ? `${detail.vote_average} (${t('투표수', {
+                    amount: detail.vote_count,
+                  })})`
+                : ' -'}
             </LabelInfo>
           </InfoRow>
           <InfoRow>
             <LabelInfo>
-              국가 :{' '}
+              {t('국가')} :{' '}
               {detail.production_countries.length > 0
                 ? detail.production_countries.map((country, index) =>
                     index === detail.production_countries.length - 1
                       ? country.name
                       : `${country.name}, `,
                   )
-                : '표시할 정보가 없습니다.'}
+                : ' -'}
             </LabelInfo>
           </InfoRow>
         </InfoContainer>
         <DescriptionContainer>
-          <ContainerTitle>줄거리</ContainerTitle>
-          <Description>
-            {detail.overview ? detail.overview : '표시할 정보가 없습니다.'}
-          </Description>
+          <ContainerTitle>{t('줄거리')}</ContainerTitle>
+          <Description>{detail.overview ? detail.overview : ' -'}</Description>
         </DescriptionContainer>
       </Container>
     )

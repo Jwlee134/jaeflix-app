@@ -6,6 +6,7 @@ import styled from 'styled-components/native';
 import {Movie, TV, Video} from '~/@types';
 
 import SubCatalogList from '~/Components/SubCatalogList';
+import {useTranslation} from 'react-i18next';
 
 const Container = styled.View`
   background-color: #141414;
@@ -21,6 +22,7 @@ interface Props {
 
 const RelatedStuffs = ({videos, similar, name}: Props) => {
   let title: string;
+  const {t} = useTranslation();
   const navigation = useNavigation();
   if (name === 'MovieDetail') {
     title = 'movie';
@@ -33,7 +35,7 @@ const RelatedStuffs = ({videos, similar, name}: Props) => {
     <Container>
       {similar.length > 0 && (
         <SubCatalogList
-          title={title === 'movie' ? '추천 영화' : '추천 TV 프로그램'}
+          title={title === 'movie' ? t('추천 영화') : t('추천 TV 프로그램')}
           titleStyle={{fontSize: 16}}
           isSearch={true}
           data={similar}

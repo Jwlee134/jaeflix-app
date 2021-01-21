@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loading from './Loading';
 import {useDispatch} from 'react-redux';
 import {setLanguage} from '~/store/language';
+import useInitialize from '~/hooks/useInitialize';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -156,18 +157,7 @@ const SearchNavigator = () => {
 };
 
 const Navigator = () => {
-  const [initialize, setInitialize] = useState(true);
-  const dispatch = useDispatch();
-
-  const handleLanguage = async () => {
-    const value = await AsyncStorage.getItem('language');
-    if (value) {
-      dispatch(setLanguage(value));
-    } else if (!value) {
-      await AsyncStorage.setItem('language', 'ko-KR');
-    }
-    setInitialize(false);
-  };
+  const {initialize, handleLanguage} = useInitialize();
 
   useEffect(() => {
     handleLanguage();

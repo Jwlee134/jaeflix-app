@@ -20,6 +20,7 @@ import useRefresh from '~/hooks/useRefresh';
 import useLanguage from '~/hooks/useLanguage';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useTranslation} from 'react-i18next';
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -46,6 +47,8 @@ const MovieHome = ({navigation}: Props) => {
   const {handleRefresh, refreshing} = useRefresh();
 
   const {showDialog, renderDialog} = useLanguage();
+
+  const {t} = useTranslation();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -88,7 +91,7 @@ const MovieHome = ({navigation}: Props) => {
           }}
         />
         <SubCatalogList
-          title="인기"
+          title={t('인기')}
           titleStyle={{fontSize: 18, paddingLeft: 8}}
           data={popular}
           onPress={(id: number, title: string) => {
@@ -99,7 +102,7 @@ const MovieHome = ({navigation}: Props) => {
           }}
         />
         <SubCatalogList
-          title="최고 평점"
+          title={t('최고 평점')}
           titleStyle={{fontSize: 18, paddingLeft: 8}}
           data={topRated}
           onPress={(id: number, title: string) => {
@@ -110,7 +113,7 @@ const MovieHome = ({navigation}: Props) => {
           }}
         />
         <SubCatalogList
-          title="상영 예정"
+          title={t('상영 예정')}
           titleStyle={{fontSize: 18, paddingLeft: 8}}
           data={upcoming}
           onPress={(id: number, title: string) => {

@@ -13,6 +13,7 @@ import Loading from '../Loading';
 import SubCatalogList from '~/Components/SubCatalogList';
 
 import {SearchNaviParamList} from '~/@types';
+import {useTranslation} from 'react-i18next';
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -42,11 +43,13 @@ const Search = ({navigation}: Props) => {
     setTerm(text);
   };
 
+  const {t} = useTranslation();
+
   return (
     <>
       <Input
         style={{marginBottom: 10}}
-        placeholder="영화 또는 TV 프로그램 검색"
+        placeholder={t('키워드를 입력하세요')}
         onChangeText={onChangeText}
         onSubmitEditing={onSubmitEditing}
       />
@@ -55,12 +58,12 @@ const Search = ({navigation}: Props) => {
       ) : error ? (
         <Error message={error} />
       ) : movie && tv && movie.length === 0 && tv.length === 0 ? (
-        <Error message="검색 결과가 없습니다." />
+        <Error message={t('검색 결과가 없습니다')} />
       ) : (
         <Container>
           {movie && movie.length > 0 && (
             <SubCatalogList
-              title="영화 검색 결과"
+              title={t('영화 검색 결과')}
               titleStyle={{fontSize: 18, paddingLeft: 8}}
               data={movie}
               isSearch={true}
@@ -74,7 +77,7 @@ const Search = ({navigation}: Props) => {
           )}
           {tv && tv.length > 0 && (
             <SubCatalogList
-              title="TV 프로그램 검색 결과"
+              title={t('TV 프로그램 검색 결과')}
               titleStyle={{fontSize: 18, paddingLeft: 8}}
               data={tv}
               isSearch={true}

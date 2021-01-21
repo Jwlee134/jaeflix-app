@@ -19,6 +19,7 @@ import SubCatalogList from '~/Components/SubCatalogList';
 import useLanguage from '~/hooks/useLanguage';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useTranslation} from 'react-i18next';
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -44,6 +45,8 @@ const TVHome = ({navigation}: Props) => {
   const {showDialog, renderDialog} = useLanguage();
 
   const {value} = useSelector((state: RootState) => state.language);
+
+  const {t} = useTranslation();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -85,7 +88,7 @@ const TVHome = ({navigation}: Props) => {
           }}
         />
         <SubCatalogList
-          title="인기"
+          title={t('인기')}
           titleStyle={{fontSize: 18, paddingLeft: 8}}
           data={popular}
           onPress={(id: number, title: string) => {
@@ -96,7 +99,7 @@ const TVHome = ({navigation}: Props) => {
           }}
         />
         <SubCatalogList
-          title="최고 평점"
+          title={t('최고 평점')}
           titleStyle={{fontSize: 18, paddingLeft: 8}}
           data={topRated}
           onPress={(id: number, title: string) => {
@@ -107,7 +110,7 @@ const TVHome = ({navigation}: Props) => {
           }}
         />
         <SubCatalogList
-          title="방영 예정"
+          title={t('방영 예정')}
           titleStyle={{fontSize: 18, paddingLeft: 8}}
           data={upcoming}
           onPress={(id: number, title: string) => {
