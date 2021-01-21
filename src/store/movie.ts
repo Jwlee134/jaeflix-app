@@ -21,22 +21,27 @@ const initialState: IState = {
   error: null,
 };
 
+interface Props {
+  page: number;
+  value: string;
+}
+
 export const fetchMovieData = createAsyncThunk(
   'movie/fetchMovie',
-  async (language: string, {rejectWithValue}) => {
+  async ({page, value}: Props, {rejectWithValue}) => {
     try {
       const {
         data: {results: nowPlaying},
-      } = await movieApi.nowPlaying(language);
+      } = await movieApi.nowPlaying(page, value);
       const {
         data: {results: upcoming},
-      } = await movieApi.upcoming(language);
+      } = await movieApi.upcoming(page, value);
       const {
         data: {results: popular},
-      } = await movieApi.popular(language);
+      } = await movieApi.popular(page, value);
       const {
         data: {results: topRated},
-      } = await movieApi.topRated(language);
+      } = await movieApi.topRated(page, value);
       return {nowPlaying, upcoming, popular, topRated};
     } catch (error) {
       console.log(error);

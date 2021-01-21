@@ -9,31 +9,29 @@ const api = axios.create({
   },
 });
 
-const page = Math.round(Math.random() * 5 + 1);
-
 export const movieApi: MovieApi = {
-  nowPlaying: (language: string) =>
+  nowPlaying: (page: number, language: string) =>
     api.get('/movie/now_playing', {
       params: {
         page,
         language,
       },
     }),
-  upcoming: (language: string) =>
+  upcoming: (page: number, language: string) =>
     api.get('/movie/upcoming', {
       params: {
         page,
         language,
       },
     }),
-  popular: (language: string) =>
+  popular: (page: number, language: string) =>
     api.get('/movie/popular', {
       params: {
         page,
         language,
       },
     }),
-  topRated: (language: string) =>
+  topRated: (page: number, language: string) =>
     api.get('/movie/top_rated', {
       params: {
         page,
@@ -69,28 +67,28 @@ export const movieApi: MovieApi = {
 };
 
 export const tvApi: TVApi = {
-  airingToday: (language: string) =>
+  airingToday: (page: number, language: string) =>
     api.get('/tv/airing_today', {
       params: {
         page,
         language,
       },
     }),
-  popular: (language: string) =>
+  popular: (page: number, language: string) =>
     api.get('/tv/popular', {
       params: {
         page,
         language,
       },
     }),
-  topRated: (language: string) =>
+  topRated: (page: number, language: string) =>
     api.get('/tv/top_rated', {
       params: {
         page,
         language,
       },
     }),
-  upcoming: (language: string) =>
+  upcoming: (page: number, language: string) =>
     api.get('/tv/on_the_air', {
       params: {
         page,

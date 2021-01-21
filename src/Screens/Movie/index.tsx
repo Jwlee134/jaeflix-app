@@ -21,13 +21,14 @@ import useLanguage from '~/hooks/useLanguage';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useTranslation} from 'react-i18next';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Container = styled.ScrollView`
   flex: 1;
   background-color: #141414;
 `;
 
-const LanguageButton = styled.TouchableOpacity`
+const Button = styled.TouchableOpacity`
   margin-right: 12px;
 `;
 
@@ -53,17 +54,17 @@ const MovieHome = ({navigation}: Props) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <LanguageButton>
+        <Button>
           <Icon name="language" size={25} onPress={showDialog} />
-        </LanguageButton>
+        </Button>
       ),
     });
   }, [navigation, showDialog]);
 
   useEffect(() => {
     SplashScreen.hide();
-    dispatch(fetchMovieData(value));
-  }, []);
+    dispatch(fetchMovieData({page: 1, value}));
+  }, [dispatch, value]);
 
   if (loading) {
     return <Loading />;

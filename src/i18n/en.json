@@ -24,5 +24,7 @@
   "영화 검색 결과": "Movie Results",
   "TV 프로그램 검색 결과": "TV Show Results",
   "검색 결과가 없습니다": "No Results.",
-  "확인": "Done"
+  "확인": "Done",
+  "영화": "Movie",
+  "TV 프로그램": "TV Show"
 }

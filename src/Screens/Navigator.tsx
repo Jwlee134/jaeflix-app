@@ -1,17 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon2 from 'react-native-vector-icons/FontAwesome';
 
 import MovieHome from './Movie';
 import Detail from './Detail';
 import TVHome from './TV';
 import Search from './Search';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Loading from './Loading';
-import {useDispatch} from 'react-redux';
-import {setLanguage} from '~/store/language';
+import WishList from './WishList';
+
 import useInitialize from '~/hooks/useInitialize';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -156,6 +155,60 @@ const SearchNavigator = () => {
   );
 };
 
+const WishListNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="WishList"
+        component={WishList}
+        options={{
+          title: 'Jaeflix',
+          headerTintColor: '#ffffff',
+          headerStyle: {
+            backgroundColor: '#141414',
+            borderBottomWidth: 0,
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="MovieDetail"
+        component={Detail}
+        options={{
+          title: 'Jaeflix',
+          headerTintColor: '#ffffff',
+          headerStyle: {
+            backgroundColor: '#141414',
+            borderBottomWidth: 0,
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="TVDetail"
+        component={Detail}
+        options={{
+          title: 'Jaeflix',
+          headerTintColor: '#ffffff',
+          headerStyle: {
+            backgroundColor: '#141414',
+            borderBottomWidth: 0,
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerBackTitleVisible: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const Navigator = () => {
   const {initialize, handleLanguage} = useInitialize();
 
@@ -190,6 +243,15 @@ const Navigator = () => {
           options={{
             tabBarIcon: ({color}) => (
               <Icon name="search" size={23} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="WishList"
+          component={WishListNavigator}
+          options={{
+            tabBarIcon: ({color}) => (
+              <Icon2 name="heart" size={20} color={color} />
             ),
           }}
         />

@@ -59,8 +59,8 @@ const TVHome = ({navigation}: Props) => {
   }, [navigation, showDialog]);
 
   useEffect(() => {
-    dispatch(fetchTVData(value));
-  }, []);
+    dispatch(fetchTVData({page: 1, value}));
+  }, [dispatch, value]);
 
   if (loading) {
     return <Loading />;

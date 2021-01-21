@@ -10,9 +10,13 @@ const useRefresh = (isMovie = true) => {
   const dispatch = useDispatch();
   const {value} = useSelector((state: RootState) => state.language);
 
+  const page = Math.round(Math.random() * 5 + 1);
+
   const handleRefresh = () => {
     setRefreshing(true);
-    dispatch(isMovie ? fetchMovieData(value) : fetchTVData(value));
+    dispatch(
+      isMovie ? fetchMovieData({page, value}) : fetchTVData({page, value}),
+    );
     setRefreshing(false);
   };
 

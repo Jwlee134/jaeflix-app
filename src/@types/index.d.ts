@@ -6,6 +6,7 @@ type MovieNaviParamList = {
   MovieHome: undefined;
   Detail: {
     id: number;
+    title: string;
   };
 };
 
@@ -13,6 +14,7 @@ type TVNaviParamList = {
   TVHome: undefined;
   Detail: {
     id: number;
+    title: string;
   };
 };
 
@@ -20,6 +22,15 @@ type SearchNaviParamList = {
   Search: undefined;
   Detail: {
     id: number;
+    title: string;
+  };
+};
+
+type WishListNaviParamList = {
+  WishList: undefined;
+  Detail: {
+    id: number;
+    title: string;
   };
 };
 
@@ -215,10 +226,22 @@ interface Credits {
 
 // API
 interface MovieApi {
-  nowPlaying: (language: string) => Promise<AxiosResponse<CommonList<Movie>>>;
-  upcoming: (language: string) => Promise<AxiosResponse<CommonList<Movie>>>;
-  popular: (language: string) => Promise<AxiosResponse<CommonList<Movie>>>;
-  topRated: (language: string) => Promise<AxiosResponse<CommonList<Movie>>>;
+  nowPlaying: (
+    page: number,
+    language: string,
+  ) => Promise<AxiosResponse<CommonList<Movie>>>;
+  upcoming: (
+    page: number,
+    language: string,
+  ) => Promise<AxiosResponse<CommonList<Movie>>>;
+  popular: (
+    page: number,
+    anguage: string,
+  ) => Promise<AxiosResponse<CommonList<Movie>>>;
+  topRated: (
+    page: number,
+    language: string,
+  ) => Promise<AxiosResponse<CommonList<Movie>>>;
   detail: (id: number, language: string) => Promise<AxiosResponse<MovieDetail>>;
   similar: (
     id: number,
@@ -232,10 +255,22 @@ interface MovieApi {
 }
 
 interface TVApi {
-  airingToday: (language: string) => Promise<AxiosResponse<CommonList<TV>>>;
-  popular: (language: string) => Promise<AxiosResponse<CommonList<TV>>>;
-  topRated: (language: string) => Promise<AxiosResponse<CommonList<TV>>>;
-  upcoming: (language: string) => Promise<AxiosResponse<CommonList<TV>>>;
+  airingToday: (
+    page: number,
+    language: string,
+  ) => Promise<AxiosResponse<CommonList<TV>>>;
+  popular: (
+    page: number,
+    language: string,
+  ) => Promise<AxiosResponse<CommonList<TV>>>;
+  topRated: (
+    page: number,
+    language: string,
+  ) => Promise<AxiosResponse<CommonList<TV>>>;
+  upcoming: (
+    page: number,
+    language: string,
+  ) => Promise<AxiosResponse<CommonList<TV>>>;
   detail: (id: number, language: string) => Promise<AxiosResponse<TVDetail>>;
   similar: (
     id: number,

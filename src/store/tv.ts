@@ -21,22 +21,27 @@ const initialState: IState = {
   error: null,
 };
 
+interface Props {
+  page: number;
+  value: string;
+}
+
 export const fetchTVData = createAsyncThunk(
   'tv/fetchTV',
-  async (language: string, {rejectWithValue}) => {
+  async ({page, value}: Props, {rejectWithValue}) => {
     try {
       const {
         data: {results: airingToday},
-      } = await tvApi.airingToday(language);
+      } = await tvApi.airingToday(page, value);
       const {
         data: {results: upcoming},
-      } = await tvApi.upcoming(language);
+      } = await tvApi.upcoming(page, value);
       const {
         data: {results: popular},
-      } = await tvApi.popular(language);
+      } = await tvApi.popular(page, value);
       const {
         data: {results: topRated},
-      } = await tvApi.topRated(language);
+      } = await tvApi.topRated(page, value);
       return {airingToday, upcoming, popular, topRated};
     } catch (error) {
       console.log(error);

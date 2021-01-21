@@ -5,6 +5,7 @@ import movie from './movie';
 import tv from './tv';
 import search from './search';
 import language from './language';
+import wishList from './wishList';
 
 import {useDispatch} from 'react-redux';
 
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   tv,
   search,
   language,
+  wishList,
 });
 
 const store = configureStore({reducer: rootReducer});

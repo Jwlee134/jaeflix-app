@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useCallback, useLayoutEffect, useState} from 'react';
 import {isMovieDetail} from '~/@types/typeGuards';
 
 import styled from 'styled-components/native';
@@ -12,11 +12,22 @@ import Similar from './Similar';
 
 import useDetailLogic from '~/hooks/useDetailLogic';
 
+import {useDispatch, useSelector} from 'react-redux';
+import {add, remove} from '~/store/wishList';
+import {RootState} from '~/store';
+import useWishList from '~/hooks/useWishList';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 const Container = styled.ScrollView`
   background-color: #141414;
 `;
 
 const SubInfoContainer = styled.View``;
+
+const Button = styled.TouchableOpacity`
+  margin-right: 12px;
+`;
 
 /* type ProfileScreenNavigationProp = StackNavigationProp<
   MovieNaviParamList | TVNaviParamList
@@ -38,11 +49,7 @@ const Detail = ({navigation, route}: any) => {
     name,
   );
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title,
-    });
-  }, [navigation, title]);
+  useWishList(navigation, title, detail, name);
 
   if (loading) {
     return <Loading />;
