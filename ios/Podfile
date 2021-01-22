@@ -3,12 +3,12 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'MovieApp' do
+target 'Jaeflix' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
 
-  target 'MovieAppTests' do
+  target 'JaeflixTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -23,10 +23,10 @@ target 'MovieApp' do
   end
 end
 
-target 'MovieApp-tvOS' do
-  # Pods for MovieApp-tvOS
+target 'Jaeflix-tvOS' do
+  # Pods for Jaeflix-tvOS
 
-  target 'MovieApp-tvOSTests' do
+  target 'Jaeflix-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

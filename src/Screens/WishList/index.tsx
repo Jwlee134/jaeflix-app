@@ -1,9 +1,12 @@
+import React, {useEffect} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
+
 import styled from 'styled-components/native';
+
 import {WishListNaviParamList} from '~/@types';
+
 import SubCatalogList from '~/Components/SubCatalogList';
 import {RootState} from '~/store';
 import Error from '../Error';
@@ -24,7 +27,7 @@ const WishList = ({navigation}: Props) => {
   const {t} = useTranslation();
 
   return movieList.length === 0 && tvList.length === 0 ? (
-    <Error message={t('빈 위시리스트')} />
+    <Error message={t('빈 위시리스트')} wishList={true} />
   ) : (
     <Container>
       {movieList.length > 0 && (

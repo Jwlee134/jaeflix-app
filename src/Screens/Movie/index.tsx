@@ -46,7 +46,7 @@ const MovieHome = ({navigation}: Props) => {
 
   const {handleRefresh, refreshing} = useRefresh();
 
-  const {showDialog, renderDialog} = useLanguage();
+  const {showDialog, renderDialog, renderRestartDialog} = useLanguage();
 
   const {t} = useTranslation();
 
@@ -125,6 +125,7 @@ const MovieHome = ({navigation}: Props) => {
         />
       </Container>
       {renderDialog()}
+      {renderRestartDialog()}
     </>
   );
 };

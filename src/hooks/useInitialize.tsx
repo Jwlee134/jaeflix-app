@@ -31,7 +31,7 @@ const useInitialize = () => {
     });
   };
 
-  const handleLanguage = async () => {
+  const handleLanguage = () => {
     handleI18n();
     setInitialize(false);
   };

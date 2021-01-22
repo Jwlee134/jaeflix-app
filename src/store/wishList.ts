@@ -29,9 +29,22 @@ const wishListSlice = createSlice({
     removeTV: (state, action) => {
       state.tvList = state.tvList.filter((item) => item.id !== action.payload);
     },
+    refreshMovieList: (state) => {
+      state.movieList = [];
+    },
+    refreshTVList: (state) => {
+      state.tvList = [];
+    },
   },
 });
 
-export const {addMovie, removeMovie, addTV, removeTV} = wishListSlice.actions;
+export const {
+  addMovie,
+  removeMovie,
+  addTV,
+  removeTV,
+  refreshMovieList,
+  refreshTVList,
+} = wishListSlice.actions;
 
 export default wishListSlice.reducer;

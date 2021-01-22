@@ -6,12 +6,18 @@ import {addMovie, addTV, removeMovie, removeTV} from '~/store/wishList';
 
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {MovieDetail, TVDetail} from '~/@types';
 
 const Button = styled.TouchableOpacity`
   margin-right: 12px;
 `;
 
-const useWishList = (navigation, title, detail, name) => {
+const useWishList = (
+  navigation: any,
+  title: string,
+  detail: MovieDetail | TVDetail | null,
+  name: string,
+) => {
   const {movieList, tvList} = useSelector((state: RootState) => state.wishList);
   const dispatch = useDispatch();
 
@@ -41,9 +47,9 @@ const useWishList = (navigation, title, detail, name) => {
   const handleRemember = useCallback(() => {
     let data;
     if (detail) {
-      if (name === 'MovieDetail') {
+      if (name === 'MovieDetail' && movieList.length > 0) {
         data = movieList.find((item) => item.id === detail.id);
-        if (data?.title === detail.title) {
+        if (data?.id === detail.id) {
           navigation.setOptions({
             headerRight: () => (
               <Button onPress={handleDelete}>
@@ -52,9 +58,9 @@ const useWishList = (navigation, title, detail, name) => {
             ),
           });
         }
-      } else {
+      } else if (name === 'TVDetail' && tvList.length > 0) {
         data = tvList.find((item) => item.id === detail.id);
-        if (data?.name === detail.name) {
+        if (data?.id === detail.id) {
           navigation.setOptions({
             headerRight: () => (
               <Button onPress={handleDelete}>

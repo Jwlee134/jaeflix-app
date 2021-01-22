@@ -42,7 +42,7 @@ const TVHome = ({navigation}: Props) => {
   );
   const {handleRefresh, refreshing} = useRefresh(false);
 
-  const {showDialog, renderDialog} = useLanguage();
+  const {showDialog, renderDialog, renderRestartDialog} = useLanguage();
 
   const {value} = useSelector((state: RootState) => state.language);
 
@@ -122,6 +122,7 @@ const TVHome = ({navigation}: Props) => {
         />
       </Container>
       {renderDialog()}
+      {renderRestartDialog()}
     </>
   );
 };
