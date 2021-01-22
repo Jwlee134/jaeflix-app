@@ -1,4 +1,4 @@
-package com.movieapp;
+package com.Jaeflix;
 
 import android.os.Bundle;
 import org.devio.rn.splashscreen.SplashScreen;

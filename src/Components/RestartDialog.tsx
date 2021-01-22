@@ -7,11 +7,15 @@ import LottieView from 'lottie-react-native';
 const SDialog = styled(Dialog)`
   align-self: center;
   background-color: #252525;
-  border-radius: 100px;
+  border-radius: 50px;
 `;
 
 const SLottieView = styled(LottieView)`
-  width: 150px;
+  width: 200px;
+`;
+
+const Label = styled.Text`
+  text-align: center;
 `;
 
 interface Props {
@@ -25,6 +29,7 @@ const RestartDialog = ({visible}: Props) => {
       <SDialog visible={visible} dismissable={false}>
         <Dialog.Content>
           <SLottieView autoPlay source={loadingAnimation} />
+          <Label>Just a second...</Label>
         </Dialog.Content>
       </SDialog>
     </Portal>

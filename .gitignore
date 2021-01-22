@@ -63,3 +63,4 @@ buck-out/
 /ios/Pods/
 
 .env
+android/java_pid7200.hprof
