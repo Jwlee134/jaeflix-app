@@ -10,7 +10,7 @@ const useRefresh = (isMovie = true) => {
   const dispatch = useDispatch();
   const {value} = useSelector((state: RootState) => state.language);
 
-  const page = Math.round(Math.random() * 5 + 1);
+  const page = Math.floor(Math.random() * 5 + 1);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -21,7 +21,7 @@ const useRefresh = (isMovie = true) => {
     );
     setTimeout(() => {
       setRefreshing(false);
-    }, 1000);
+    }, 100);
   };
 
   return {handleRefresh, refreshing};

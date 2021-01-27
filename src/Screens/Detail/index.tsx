@@ -1,4 +1,4 @@
-import React, {useCallback, useLayoutEffect, useState} from 'react';
+import React from 'react';
 import {isMovieDetail} from '~/@types/typeGuards';
 
 import styled from 'styled-components/native';

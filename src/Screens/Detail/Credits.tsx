@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList} from 'react-native';
 
 import styled from 'styled-components/native';
 

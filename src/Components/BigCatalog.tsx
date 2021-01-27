@@ -82,7 +82,7 @@ const BigCatalog = ({
         {catalogTitle && <LabelYear>{catalogTitle}</LabelYear>}
         <SubInfoContainer>
           <Background />
-          <LabelTitle>{title}</LabelTitle>
+          <LabelTitle numberOfLines={1}>{title}</LabelTitle>
           <LabelSubtitle>{subtitle}</LabelSubtitle>
         </SubInfoContainer>
       </InfoContainer>
