@@ -9,7 +9,7 @@ import {Cast, Crew} from '~/@types';
 const Container = styled.View`
   background-color: #141414;
   flex: 1;
-  padding: 0px 16px;
+  padding: 0px 12px;
 `;
 
 const Title = styled.Text`

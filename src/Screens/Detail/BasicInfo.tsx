@@ -38,7 +38,7 @@ const DescriptionContainer = styled.View`
 const Description = styled.Text`
   color: #ffffff;
   opacity: 0.8;
-  line-height: 20;
+  line-height: 23px;
 `;
 
 const VideoSection = styled.View``;

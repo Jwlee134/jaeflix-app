@@ -12,12 +12,16 @@ const useRefresh = (isMovie = true) => {
 
   const page = Math.round(Math.random() * 5 + 1);
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setRefreshing(true);
     dispatch(
-      isMovie ? fetchMovieData({page, value}) : fetchTVData({page, value}),
+      isMovie
+        ? await fetchMovieData({page, value})
+        : await fetchTVData({page, value}),
     );
-    setRefreshing(false);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
   };
 
   return {handleRefresh, refreshing};

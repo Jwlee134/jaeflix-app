@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import styled from 'styled-components/native';
 
-import {Movie, TV, Video} from '~/@types';
+import {Movie, TV} from '~/@types';
 
 import SubCatalogList from '~/Components/SubCatalogList';
 import {useTranslation} from 'react-i18next';
@@ -11,7 +11,7 @@ import {useTranslation} from 'react-i18next';
 const Container = styled.View`
   background-color: #141414;
   flex: 1;
-  padding: 0px 16px;
+  padding: 0px 12px;
 `;
 
 interface Props {
