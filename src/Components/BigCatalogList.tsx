@@ -14,7 +14,7 @@ import {Movie, TV} from '~/@types';
 import {useTranslation} from 'react-i18next';
 
 const Container = styled.View`
-  height: 300px;
+  height: 250px;
   margin-bottom: 8px;
 `;
 

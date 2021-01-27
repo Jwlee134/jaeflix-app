@@ -18,7 +18,7 @@ import {PERSIST, persistReducer, persistStore} from 'redux-persist';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['movie', 'tv'],
+  blacklist: ['movie', 'tv', 'search'],
 };
 
 const rootReducer = combineReducers({

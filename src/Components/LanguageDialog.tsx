@@ -36,11 +36,13 @@ const LanguageDialog = ({
             value={value}>
             <RadioButton.Item
               labelStyle={{color: '#ffffff'}}
+              uncheckedColor="#dddddd"
               label="한국어"
               value="ko-KR"
             />
             <RadioButton.Item
               labelStyle={{color: '#ffffff'}}
+              uncheckedColor="#dddddd"
               label="English"
               value="en-US"
             />

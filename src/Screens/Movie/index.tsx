@@ -19,7 +19,7 @@ import {RootState} from '~/store';
 import useRefresh from '~/hooks/useRefresh';
 import useLanguage from '~/hooks/useLanguage';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useTranslation} from 'react-i18next';
 
 const Container = styled.ScrollView`

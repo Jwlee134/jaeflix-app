@@ -247,7 +247,7 @@ const Navigator = () => {
           }}
         />
         <Tab.Screen
-          name="WishList"
+          name="Wishlist"
           component={WishListNavigator}
           options={{
             tabBarIcon: ({color}) => (

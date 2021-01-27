@@ -2,7 +2,6 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Dimensions, Linking} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/AntDesign';
 
 import styled from 'styled-components/native';
 
@@ -39,19 +38,26 @@ const DescriptionContainer = styled.View`
 const Description = styled.Text`
   color: #ffffff;
   opacity: 0.8;
+  line-height: 20;
 `;
 
 const VideoSection = styled.View``;
 
 const VideoContainer = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 10px;
+  margin: 0px 5px;
+  width: 220px;
+`;
+
+const VideoImg = styled.Image`
+  border-radius: 5px;
 `;
 
 const VideoTitle = styled.Text`
-  margin-left: 10px;
-  width: 90%;
+  font-size: 12px;
+  margin: 5px 0px;
+  margin-left: 2.5px;
+  margin-bottom: 10px;
+  color: #ffffff;
 `;
 
 interface Props {
@@ -117,13 +123,20 @@ const BasicInfo = ({detail}: Props) => {
             <FlatList
               data={detail.videos.results}
               keyExtractor={(item, index) => `videoItem-${item.id}-${index}`}
+              horizontal={true}
+              initialNumToRender={20}
               renderItem={({item}) => (
                 <VideoContainer
-                  activeOpacity={0.6}
+                  activeOpacity={0.7}
                   onPress={() => {
                     Linking.openURL(`Https://youtu.be/${item.key}`);
                   }}>
-                  <Icon name="youtube" size={20} />
+                  <VideoImg
+                    source={{
+                      uri: `https://img.youtube.com/vi/${item.key}/sddefault.jpg`,
+                    }}
+                    style={{width: 220, height: 123.75}}
+                  />
                   <VideoTitle>{item.name}</VideoTitle>
                 </VideoContainer>
               )}

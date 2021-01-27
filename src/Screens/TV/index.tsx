@@ -18,7 +18,7 @@ import Loading from '../Loading';
 import BigCatalogList from '~/Components/BigCatalogList';
 import SubCatalogList from '~/Components/SubCatalogList';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useTranslation} from 'react-i18next';
 
 const Container = styled.ScrollView`

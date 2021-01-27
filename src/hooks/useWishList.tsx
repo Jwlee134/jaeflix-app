@@ -10,6 +10,7 @@ import {MovieDetail, TVDetail} from '~/@types';
 
 const Button = styled.TouchableOpacity`
   margin-right: 12px;
+  color: #ffffff;
 `;
 
 const useWishList = (

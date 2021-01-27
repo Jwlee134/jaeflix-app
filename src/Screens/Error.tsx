@@ -11,7 +11,9 @@ const Container = styled.View`
   padding: 0px 10px;
 `;
 
-const ErrorText = styled.Text``;
+const ErrorText = styled.Text`
+  color: rgba(255, 255, 255, 0.7);
+`;
 
 const SLottieView = styled(LottieView)`
   opacity: 0.7;

@@ -38,7 +38,8 @@ const CreditName = styled.Text`
 
 const CreditJob = styled.Text`
   font-size: 11px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  opacity: 0.6;
 `;
 
 interface Props {

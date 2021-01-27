@@ -1,0 +1,4 @@
+<resources>
+    <color name="status_bar_color">#000000</color>
+    <color name="indicator_color">#50ffffff</color>
+</resources>

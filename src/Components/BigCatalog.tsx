@@ -76,7 +76,7 @@ const BigCatalog = ({
             ? {uri: `https://image.tmdb.org/t/p/w780${image}`}
             : require('~/Assets/Images/noImg.png')
         }
-        style={{width: Dimensions.get('window').width, height: 300}}
+        style={{width: Dimensions.get('window').width, height: 250}}
       />
       <InfoContainer>
         {catalogTitle && <LabelYear>{catalogTitle}</LabelYear>}

@@ -58,7 +58,7 @@ const useLanguage = () => {
     }
     setTimeout(() => {
       RNRestart.Restart();
-    }, 2000);
+    }, 1500);
   };
 
   const closeDialog = () => setVisible(false);

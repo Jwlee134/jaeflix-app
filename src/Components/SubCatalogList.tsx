@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {FlatList} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
@@ -34,6 +35,7 @@ const CatalogImage = styled.Image`
 const CatalogTitle = styled.Text`
   margin: 5px 0px;
   margin-left: 2.5px;
+  margin-bottom: 10px;
   color: #ffffff;
   font-size: 11px;
 `;
@@ -47,6 +49,8 @@ interface Props {
 }
 
 const SubCatalogList = ({title, titleStyle, data, onPress}: Props) => {
+  const {i18n} = useTranslation();
+
   return (
     <Container>
       <InfoContainer>
@@ -57,7 +61,7 @@ const SubCatalogList = ({title, titleStyle, data, onPress}: Props) => {
           horizontal={true}
           data={data}
           keyExtractor={(item, index) => `catalogList-${item.id}-${index}`}
-          initialNumToRender={20}
+          initialNumToRender={100}
           renderItem={({item}) => (
             <CatalogImgContainer
               activeOpacity={0.7}
@@ -75,12 +79,20 @@ const SubCatalogList = ({title, titleStyle, data, onPress}: Props) => {
                 style={{width: 100, height: 150}}
               />
               <CatalogTitle>
-                {isMovie(item)
-                  ? item.title.length > 15
-                    ? `${item.title.substring(0, 15)}..`
+                {i18n.language === 'ko-KR'
+                  ? isMovie(item)
+                    ? item.title.length > 9
+                      ? `${item.title.substring(0, 9)}...`
+                      : item.title
+                    : item.name.length > 9
+                    ? `${item.name.substring(0, 9)}...`
+                    : item.name
+                  : isMovie(item)
+                  ? item.title.length > 13
+                    ? `${item.title.substring(0, 13)}...`
                     : item.title
-                  : item.name.length > 15
-                  ? `${item.name.substring(0, 14)}..`
+                  : item.name.length > 13
+                  ? `${item.name.substring(0, 13)}...`
                   : item.name}
               </CatalogTitle>
             </CatalogImgContainer>

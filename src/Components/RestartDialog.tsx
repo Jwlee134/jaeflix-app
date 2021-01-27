@@ -6,8 +6,8 @@ import LottieView from 'lottie-react-native';
 
 const SDialog = styled(Dialog)`
   align-self: center;
-  background-color: #252525;
-  border-radius: 50px;
+  background-color: transparent;
+  border-radius: 100px;
 `;
 
 const SLottieView = styled(LottieView)`
@@ -16,6 +16,9 @@ const SLottieView = styled(LottieView)`
 
 const Label = styled.Text`
   text-align: center;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 interface Props {
