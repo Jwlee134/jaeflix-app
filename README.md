@@ -3,5 +3,7 @@
  - [x] React Native CLI
  - [x] TypeScript
  - [x] React Navigation
- - [x] Language Mode
- - [x] Personal WishList
+ - [x] Support Korean and English
+ - [x] Personal Wishlist
+
+Try it on [Google Play Store](https://play.google.com/store/apps/details?id=com.Jaeflix)
