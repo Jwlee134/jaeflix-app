@@ -2,8 +2,8 @@
  - [x] TMDB API
  - [x] React Native CLI
  - [x] TypeScript
- - [x] React Navigation
- - [x] Support Korean and English
+ - [x] Redux Toolkit & Redux Persist
+ - [x] 2 Languages mode (Korean, English)
  - [x] Personal Wishlist
 
 # Preview
