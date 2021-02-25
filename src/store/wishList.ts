@@ -35,6 +35,12 @@ const wishListSlice = createSlice({
     refreshTVList: (state) => {
       state.tvList = [];
     },
+    replaceMovieList: (state, action) => {
+      state.movieList = action.payload;
+    },
+    replaceTVLIst: (state, action) => {
+      state.tvList = action.payload;
+    },
   },
 });
 
@@ -45,6 +51,8 @@ export const {
   removeTV,
   refreshMovieList,
   refreshTVList,
+  replaceMovieList,
+  replaceTVLIst,
 } = wishListSlice.actions;
 
 export default wishListSlice.reducer;

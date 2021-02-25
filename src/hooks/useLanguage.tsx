@@ -7,12 +7,7 @@ import {RootState} from '~/store';
 import LanguageDialog from '~/Components/LanguageDialog';
 import {useTranslation} from 'react-i18next';
 import {movieApi, tvApi} from '~/api';
-import {
-  addMovie,
-  addTV,
-  refreshMovieList,
-  refreshTVList,
-} from '~/store/wishList';
+import {replaceMovieList, replaceTVLIst} from '~/store/wishList';
 import RestartDialog from '~/Components/RestartDialog';
 
 const useLanguage = () => {
@@ -27,38 +22,38 @@ const useLanguage = () => {
 
   const showDialog = () => setVisible(true);
 
-  const handleList = (language: string) => {
+  const handleList = async (language: string) => {
     if (movieList.length > 0) {
-      dispatch(refreshMovieList());
-      const copy = movieList.slice();
-      copy.forEach(async (item) => {
-        const {data} = await movieApi.detail(item.id, language);
-        dispatch(addMovie(data));
-      });
+      const languageChangedList = await Promise.all(
+        movieList.map(async (movie) => {
+          const {data} = await movieApi.detail(movie.id, language);
+          return data;
+        }),
+      );
+      dispatch(replaceMovieList(languageChangedList));
     }
     if (tvList.length > 0) {
-      dispatch(refreshTVList());
-      const copy = tvList.slice();
-      copy.forEach(async (item) => {
-        const {data} = await tvApi.detail(item.id, language);
-        dispatch(addTV(data));
-      });
+      const languageChangedList = await Promise.all(
+        tvList.map(async (tv) => {
+          const {data} = await tvApi.detail(tv.id, language);
+          return data;
+        }),
+      );
+      dispatch(replaceTVLIst(languageChangedList));
     }
   };
 
-  const saveLanguage = () => {
+  const saveLanguage = async () => {
     setVisible(false);
     setRestartVisible(true);
     if (value === 'ko-KR') {
-      handleList(value);
+      await handleList(value);
       changelanguage('ko');
     } else {
-      handleList(value);
+      await handleList(value);
       changelanguage('en');
     }
-    setTimeout(() => {
-      RNRestart.Restart();
-    }, 1500);
+    RNRestart.Restart();
   };
 
   const closeDialog = () => setVisible(false);
